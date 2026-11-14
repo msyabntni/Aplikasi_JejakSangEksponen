@@ -35,3 +35,6 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# skrip sementara (jangan di-commit)
+scripts/tmp-*
