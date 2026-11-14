@@ -12,6 +12,8 @@ if not exist .next\BUILD_ID (echo Membangun aplikasi... & call npm run build || 
 echo.
 echo   JEJAK SANG EKSPONEN berjalan di http://localhost:3000
 echo   Tekan Ctrl+C untuk berhenti.
+rem Backend Python (folder api/) dijalankan di jendela terpisah, port 5328.
+where python >nul 2>nul && (start "Backend Python Jejak Sang Eksponen" /min python backend\dev_server.py) || echo   [info] Python tidak ditemukan: penilaian memakai cadangan di browser.
 echo.
 start "" http://localhost:3000
 call npm start

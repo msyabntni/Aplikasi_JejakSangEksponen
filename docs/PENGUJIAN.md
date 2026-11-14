@@ -3,12 +3,13 @@
 ## Otomatis
 
 ```bash
-npm run lint                 # TypeScript (tsc --noEmit)
-npm test                     # unit test Vitest
+npm test                     # unit test JavaScript (Vitest)
+npm run test:py              # uji backend Python (unittest) + kesetaraan JS ↔ Python
 npm run build                # build produksi
 npm run test:sql             # skema SQL, RLS, dan RPC di PostgreSQL WASM (PGlite)
 
 # uji alur lengkap di browser (Playwright)
+python backend/dev_server.py                  # terminal 0: backend Python
 npm run build && npx next start -p 3123      # terminal 1
 npm run test:e2e                              # terminal 2: alur lengkap
 npm run test:games                            # terminal 2: memainkan 6 mini-game sampai hasil
@@ -19,7 +20,14 @@ npm run test:journey                          # terminal 2: perjalanan penuh 7 w
 
 > Windows: jalankan `npm test` dari path dengan huruf drive kapital (`C:\...`). Jika path diawali `c:\`, Vitest bisa memuat dua salinan modul dan gagal dengan pesan *"Cannot read properties of undefined (reading 'config')"*.
 
-### Cakupan unit test (`src/lib/core.test.ts`)
+### Cakupan uji Python (`tests/test_backend.py`)
+
+- Perhitungan pangkat eksak, angka tak terdefinisi (0⁰, 0⁻ⁿ), validasi input Laboratorium.
+- Setiap kunci dari 173 soal dinilai benar; variasi isian pretest; pecahan setara; skor dan rekap per indikator.
+- **Kesetaraan dengan JavaScript**: 1.769 variasi jawaban, 228 perhitungan pangkat, dan 225 validasi input harus sama persis dengan frontend (fixture `tests/fixtures/kesetaraan_js.json` dibuat oleh `npm run py:data`).
+- Endpoint HTTP sungguhan: `/api/status`, `/api/nilai` (termasuk penanganan input salah: 400/405), `/api/pangkat`, dan 404.
+
+### Cakupan unit test JavaScript (`src/lib/core.test.js`)
 
 - Perhitungan pangkat exact: positif, nol, negatif (sebagai pecahan), basis negatif, serta 0⁰ dan 0⁻ⁿ yang tidak terdefinisi.
 - Validasi input Laboratorium: kosong, bukan angka, desimal, dan batas nilai.

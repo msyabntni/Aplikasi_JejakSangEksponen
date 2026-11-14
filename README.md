@@ -30,7 +30,14 @@ JEJAK SANG EKSPONEN adalah media pembelajaran matematika berbasis web untuk sisw
 
 ## Teknologi
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion · Lucide React · Recharts · SVG · localStorage · Supabase (Auth, PostgreSQL, RLS). Pengujian memakai Vitest, Playwright, dan PGlite.
+| Bagian | Bahasa & teknologi |
+|---|---|
+| **Frontend** | **JavaScript** (`.js` / `.jsx`): Next.js 16 (App Router), React 19, Tailwind CSS 4, Framer Motion, Lucide React, Recharts, SVG |
+| **Backend** | **Python** (`api/*.py`, hanya pustaka standar): penilaian jawaban (`/api/nilai`), perhitungan pangkat Laboratorium (`/api/pangkat`), status (`/api/status`). Di Vercel berjalan sebagai fungsi serverless Python; di komputer sendiri lewat `backend/dev_server.py` |
+| Penyimpanan | localStorage (mode lokal); Supabase Auth + PostgreSQL + RLS (mode akun, opsional) |
+| Pengujian | Vitest (JS), unittest (Python), Playwright (browser), PGlite (SQL) |
+
+**Alur penilaian:** jawaban siswa dikirim ke backend Python `/api/nilai`. Hasilnya ditandai *"Dinilai oleh server Python"*. Jika server Python tidak terjangkau (offline atau belum dijalankan), aplikasi tetap berjalan dengan penilaian cadangan di browser yang logikanya identik. Kesamaannya dibuktikan uji kesetaraan di `tests/test_backend.py`: 1.769 variasi jawaban, 228 perhitungan pangkat, dan 225 validasi input harus memberi hasil yang persis sama.
 
 ## Menjalankan secara lokal
 
@@ -38,7 +45,12 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Framer Mo
 ode-portable
 ode-v26.13.1-win-x64`, menginstal dependency dan build jika belum ada, lalu membuka <http://localhost:3000>. Untuk mode pengembangan, pakai `jalankan-dev.cmd`.
 
-Prasyarat cara manual: **Node.js 20 atau lebih baru** (diuji dengan Node 26.13.1).
+Prasyarat cara manual: **Node.js 20 atau lebih baru** (diuji dengan Node 26.13.1) dan **Python 3.9 atau lebih baru** (diuji dengan Python 3.14) untuk backend. Backend tidak memerlukan `pip install`.
+
+```bash
+python backend/dev_server.py   # terminal 1: backend Python → http://127.0.0.1:5328/api/status
+npm run dev                    # terminal 2: frontend → http://localhost:3000 (/api/* diteruskan ke Python)
+```
 
 ```bash
 npm install          # instal dependency
@@ -80,9 +92,18 @@ Panduan lengkap ada di [docs/SUPABASE.md](docs/SUPABASE.md). Ringkasnya:
 ## Struktur folder
 
 ```
-src/
+api/                         BACKEND PYTHON (fungsi serverless Vercel)
+  nilai.py                   POST /api/nilai: menilai jawaban (pretest, posttest, misi, latihan, challenge)
+  pangkat.py                 GET/POST /api/pangkat: perhitungan pangkat eksak untuk Laboratorium
+  status.py                  GET /api/status: cek kesehatan backend
+  _lib/penilaian.py          logika penilaian (normalisasi isian, pecahan setara, 6 jenis soal)
+  _lib/pangkat.py            perhitungan pangkat eksak (fractions), validasi input, langkah penyelesaian
+  _lib/data_soal.py          kunci 173 soal (dibuat otomatis: npm run py:data)
+backend/dev_server.py        server lokal yang menjalankan fungsi api/ yang sama (port 5328)
+tests/test_backend.py        uji Python + uji kesetaraan JavaScript ↔ Python
+src/                         FRONTEND JAVASCRIPT
   app/
-    page.tsx                 Landing page
+    page.jsx                 Landing page
     mulai/                   Identitas penjelajah
     karakter/                Lembar referensi karakter Naru & Kaciro
     auth/                    login, daftar, lupa-password, reset-password
@@ -91,7 +112,7 @@ src/
       game/  game/[slug]/  challenge/  posttest/  posttest/hasil/
       perkembangan/  profil/  riwayat/
   components/
-    characters/              Naru.tsx, Kaciro.tsx (SVG multi-pose)
+    characters/              Naru.jsx, Kaciro.jsx (SVG multi-pose)
     scenery/                 Latar hutan berlapis, sulur, monstera, kupu-kupu, peti, permata
     map/                     AdventureMap (peta interaktif)
     region/                  RegionScene, ConceptVisual, RegionMission
@@ -103,16 +124,16 @@ src/
     auth/                    Kerangka & field formulir akun
   data/                      Materi wilayah, pretest/posttest, bank soal, game, challenge
   lib/
-    math/exponent.ts         Perhitungan pangkat exact (BigInt + pecahan), validasi Lab
-    grading.ts               Normalisasi & penilaian jawaban
-    gamification.ts          XP, level, lencana
-    unlock.ts                Aturan buka wilayah, challenge, posttest
+    math/exponent.js         Perhitungan pangkat exact (BigInt + pecahan), validasi Lab
+    grading.js               Normalisasi & penilaian jawaban
+    gamification.js          XP, level, lencana
+    unlock.js                Aturan buka wilayah, challenge, posttest
     storage/                 localStorage berversi + migrasi
     store/ProgressProvider   State global (adaptor tamu/akun)
     supabase/                Klien & adaptor RPC
 supabase/
   schema.sql                 Tabel, RLS, fungsi penilaian & XP
-  seed.sql                   Dibuat otomatis dari data TypeScript (npm run seed:generate)
+  seed.sql                   Dibuat otomatis dari data soal JavaScript (npm run seed:generate)
 scripts/                     Generator seed, uji E2E, uji SQL
 docs/                        Panduan Supabase, pengujian, deployment
 ```
@@ -123,8 +144,10 @@ docs/                        Panduan Supabase, pengujian, deployment
 |---|---|
 | `npm run dev` | Server pengembangan |
 | `npm run build` / `npm start` | Build dan jalankan versi produksi |
-| `npm run lint` | Pemeriksaan TypeScript |
-| `npm test` | Unit test (Vitest) |
+| `npm run py:dev` | Menjalankan backend Python lokal (port 5328) |
+| `npm run py:data` | Membuat ulang kunci soal untuk Python + fixture uji kesetaraan (setelah soal diubah) |
+| `npm test` | Unit test JavaScript (Vitest) |
+| `npm run test:py` | Uji backend Python (unittest), termasuk uji kesetaraan dengan JavaScript |
 | `npm run test:e2e` | Uji alur lengkap di browser (Playwright). Server harus berjalan di port 3123 |
 | `npm run test:journey` | Memainkan seluruh perjalanan lewat UI: pretest, 7 wilayah, 3 level challenge, posttest, XP, dan lencana |
 | `npm run test:games` | Memainkan keenam mini-game sampai halaman hasil (Playwright) |

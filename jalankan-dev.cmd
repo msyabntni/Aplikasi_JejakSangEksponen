@@ -7,4 +7,6 @@ where node >nul 2>nul || (echo Node.js tidak ditemukan. & pause & exit /b 1)
 cd /d "%~dp0"
 set NEXT_TELEMETRY_DISABLED=1
 if not exist node_modules call npm install
+rem Backend Python (folder api/) dijalankan di jendela terpisah, port 5328.
+where python >nul 2>nul && (start "Backend Python Jejak Sang Eksponen" /min python backend\dev_server.py) || echo   [info] Python tidak ditemukan: penilaian memakai cadangan di browser.
 call npm run dev

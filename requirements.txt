@@ -1,0 +1,2 @@
+# Backend Python Jejak Sang Eksponen (folder api/ dan backend/)
+# hanya memakai pustaka standar Python 3.9+ — tidak ada paket yang perlu diinstal.
