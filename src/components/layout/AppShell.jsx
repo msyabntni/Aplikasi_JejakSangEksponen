@@ -44,7 +44,7 @@ export function AppShell({ children }) {
   const navOn = store.pretestDone;
 
   return (
-    <div className="min-h-dvh overflow-x-clip bg-jungle md:flex">
+    <div className="min-h-dvh overflow-x-clip bg-jungle motif-daun md:flex">
       {/* navigasi samping (tablet/desktop) */}
       {navOn && (
         <aside className="sticky top-0 hidden print:!hidden h-dvh w-24 shrink-0 flex-col items-center gap-2 border-r-4 border-bark bg-[linear-gradient(180deg,#5a3a28,#3e2718)] py-4 md:flex lg:w-28">
@@ -76,7 +76,7 @@ export function AppShell({ children }) {
       )}
 
       <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-40 print:hidden flex items-center justify-between gap-2 border-b-4 border-bark bg-jungle/95 px-3 py-2 backdrop-blur sm:px-5">
+        <header className="sticky top-0 z-40 print:hidden flex items-center justify-between gap-2 border-b-4 border-bark bg-jungle/95 motif-daun px-3 py-2 backdrop-blur sm:px-5">
           <Link href={navOn ? "/camp" : "/"} className={navOn ? "md:invisible" : ""} aria-label="Beranda">
             <Logo compact hideTextOnMobile />
           </Link>

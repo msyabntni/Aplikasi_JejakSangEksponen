@@ -38,7 +38,7 @@ export default function LabPage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_30%_0%,#4fb3a9,#1f6b63_50%,#173F2A)] px-4 pb-6 pt-8">
+      <section className="relative overflow-hidden motif-daun [--bg:radial-gradient(ellipse_at_30%_0%,#4fb3a9,#1f6b63_50%,#173F2A)] px-4 pb-6 pt-8">
         <HangingVines count={5} seed={7} />
         <Fireflies count={10} />
         <div className="relative z-20 mx-auto flex max-w-5xl items-end gap-3">

@@ -166,7 +166,7 @@ function CampInner() {
 
           <Parchment>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="col-span-2 rounded-2xl bg-jungle p-3 text-cream sm:col-span-2">
+              <div className="col-span-2 rounded-2xl bg-jungle motif-daun p-3 text-cream sm:col-span-2">
                 <div className="flex items-baseline justify-between">
                   <span className="font-display text-2xl font-extrabold text-sun">Level {s.level.level}</span>
                   <span className="text-sm">{s.level.title}</span>

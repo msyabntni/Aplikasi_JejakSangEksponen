@@ -51,7 +51,7 @@ export default function PretestResultPage() {
 
   if (transit) {
     return (
-      <div className="relative grid min-h-[calc(100dvh-64px)] place-items-center overflow-hidden bg-[linear-gradient(180deg,#246B45,#173F2A)]">
+      <div className="relative grid min-h-[calc(100dvh-64px)] place-items-center overflow-hidden motif-daun [--bg:linear-gradient(180deg,#246B45,#173F2A)]">
         <HangingVines count={9} />
         <motion.div initial={{ x: "-60vw", rotate: -20 }} animate={{ x: "60vw", rotate: 20 }} transition={{ duration: 1.3, ease: "easeInOut" }}>
           <Naru pose="swing" width={180} />

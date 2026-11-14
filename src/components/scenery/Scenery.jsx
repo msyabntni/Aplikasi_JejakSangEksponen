@@ -188,10 +188,129 @@ export function SunRays({ className = "" }) {
 export function Waterfall({ className = "" }) {
   return (
     <div className={`absolute ${className}`} aria-hidden>
+      {/* tebing batu di belakang air terjun (lebih lebar ke kanan agar tidak menghalangi judul) */}
+      <svg viewBox="0 0 260 400" preserveAspectRatio="none" className="absolute -left-[30%] -top-[7%] h-[109%] w-[253%] overflow-visible">
+        <path
+          d="M18 46 L30 22 L52 14 L70 4 L104 0 L130 8 L152 6 L176 18 L204 30 L228 52 L244 84 L250 124 L244 170 L256 222 L248 278 L258 332 L252 392 Q228 404 200 396 Q170 404 140 398 L30 398 Q14 404 8 392 L14 352 L6 300 L12 246 L4 196 L12 146 L6 98 Z"
+          fill="#8d8571"
+        />
+        {/* bidang terang & bayangan tebing */}
+        <path d="M150 10 L176 20 L204 32 L228 54 L244 86 L250 126 L244 170 L256 222 L248 278 L258 332 L252 392 Q228 404 200 396 L196 330 L188 270 L198 210 L186 150 L192 92 L170 40 Z" fill="#a69d86" />
+        <path d="M12 146 L6 98 L18 46 L30 22 L36 60 L28 110 L34 170 L24 230 L32 300 L22 360 L24 400 L8 400 L14 352 L6 300 L12 246 L4 196 Z" fill="#766e5c" />
+        {/* lapisan retakan batu */}
+        <g stroke="#6b6352" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8">
+          <path d="M140 60 L170 66 L200 58 L228 66" />
+          <path d="M150 128 L186 136 L214 128 L240 136" />
+          <path d="M146 196 L180 190 L212 198 L244 192" />
+          <path d="M150 262 L188 270 L220 262 L246 270" />
+          <path d="M156 330 L190 324 L222 332 L250 326" />
+          <path d="M10 120 L26 126" />
+          <path d="M8 214 L26 208" />
+          <path d="M12 300 L28 306" />
+        </g>
+        {/* batu basah gelap di balik aliran air */}
+        <path d="M34 20 Q84 6 136 20 L140 400 L32 400 Z" fill="#5c6a63" />
+        {/* lumut di tepian tebing */}
+        <g fill="#5f9e4f">
+          <path d="M140 60 Q170 46 206 58 Q190 68 166 66 Q148 68 140 60Z" /><path d="M212 62 Q226 54 240 66 Q228 72 214 68Z" />
+          <path d="M150 196 Q180 184 214 198 Q196 206 172 202 Q156 204 150 196Z" />
+          <path d="M156 330 Q190 318 226 332 Q206 340 182 336 Q164 338 156 330Z" /><path d="M228 326 Q242 318 252 330 Q242 334 230 332Z" />
+          <path d="M6 98 Q18 92 30 100 Q22 106 14 104Z" />
+          <path d="M4 196 Q16 188 28 198 Q18 204 10 202Z" />
+        </g>
+        <g fill="#7cc283">
+          <circle cx="164" cy="58" r="5" />
+          <circle cx="196" cy="190" r="4" /><circle cx="236" cy="62" r="4" />
+          <circle cx="16" cy="96" r="4" />
+        </g>
+        {/* pakis & tanaman menjuntai dari celah tebing */}
+        <g stroke="#3f8a55" strokeWidth="3" fill="none" strokeLinecap="round">
+          <path d="M176 64 Q190 90 184 120" /><path d="M226 66 Q240 92 234 124" />
+          <path d="M22 104 Q8 130 14 160" />
+          <path d="M200 202 Q214 226 206 252" />
+        </g>
+        <g fill="#62A66B">
+          {[
+            [181, 78, 1],
+            [186, 92, -1],
+            [182, 106, 1],
+            [17, 118, -1],
+            [11, 132, 1],
+            [13, 146, -1],
+            [205, 216, 1],
+            [209, 230, -1],
+            [205, 244, 1],
+            [231, 80, 1],
+            [236, 94, -1],
+            [232, 108, 1],
+          ].map(([x, y, a], i) => (
+            <path key={i} d={`M${x} ${y} q${a * 10} -6 ${a * 14} 2 q${a * -8} 5 ${a * -14} -2Z`} />
+          ))}
+        </g>
+      </svg>
       <div className="relative h-full w-full overflow-hidden rounded-t-[40%] rounded-b-md">
         <div className="water-fall absolute inset-0 bg-sky/80" />
       </div>
+      {/* bibir tebing tempat sumber air keluar: batu, lumut & tanaman */}
+      <svg viewBox="0 0 170 64" className="absolute -left-[35%] -top-[9%] w-[170%] overflow-visible">
+        <path d="M0 40 Q4 18 26 14 Q40 2 62 8 Q86 0 110 8 Q134 2 148 16 Q168 20 170 42 Q150 52 130 46 Q112 54 96 44 L74 44 Q58 54 40 46 Q18 54 0 40Z" fill="#9a9178" stroke="#6b6352" strokeWidth="3" />
+        <path d="M10 34 Q24 22 40 26 M118 22 Q136 16 154 30" stroke="#b9b09a" strokeWidth="4" strokeLinecap="round" fill="none" />
+        {/* air mengalir keluar dari celah batu */}
+        <path d="M38 44 Q52 36 85 38 Q118 36 132 44 Q118 52 85 50 Q52 52 38 44Z" fill="#bfeaf3" />
+        <path d="M50 44 Q66 40 85 42 Q104 40 120 44" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.9" />
+        {/* lumut menutupi puncak batu */}
+        <path d="M14 22 Q30 6 56 10 Q76 2 100 8 Q124 2 146 14 Q132 20 114 16 Q92 22 74 16 Q52 22 36 18 Q24 24 14 22Z" fill="#5f9e4f" />
+        <g fill="#7cc283">
+          <circle cx="40" cy="12" r="5" />
+          <circle cx="98" cy="8" r="4.5" />
+          <circle cx="132" cy="14" r="4" />
+        </g>
+        {/* tanaman kecil & daun pakis di atas bibir tebing */}
+        <g fill="#3f8a55">
+          <path d="M22 18 Q12 0 4 -6 Q18 -2 26 14Z" />
+          <path d="M28 16 Q30 -6 40 -14 Q38 4 32 16Z" />
+          <path d="M140 14 Q150 -4 162 -8 Q154 6 146 18Z" />
+          <path d="M134 12 Q128 -8 132 -18 Q140 -2 138 12Z" />
+        </g>
+        <g fill="#62A66B">
+          <path d="M66 8 Q60 -8 68 -16 Q72 -2 70 8Z" />
+          <path d="M72 8 Q80 -6 90 -8 Q84 2 76 10Z" />
+        </g>
+      </svg>
       <div className="absolute -bottom-3 left-1/2 h-6 w-[160%] -translate-x-1/2 rounded-full bg-white/60 blur-sm" />
+      {/* kolam kecil di kaki air terjun: bebatuan, lumut & tanaman */}
+      <svg viewBox="0 0 220 70" className="absolute -bottom-[11%] -left-[60%] w-[220%] overflow-visible">
+        <ellipse cx="110" cy="34" rx="62" ry="13" fill="#8ED6E8" opacity="0.9" />
+        <path d="M70 32 q8 -5 16 0 q8 -5 16 0 M112 36 q8 -5 16 0 q8 -5 16 0" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.85" />
+        {/* batu kiri */}
+        <path d="M18 50 C14 34 30 22 48 24 C64 22 76 34 72 48 C70 58 24 60 18 50Z" fill="#a9b0b2" stroke="#646c72" strokeWidth="3" />
+        <path d="M28 34 Q38 26 50 28" stroke="#d4d9da" strokeWidth="4" strokeLinecap="round" fill="none" />
+        <path d="M24 30 Q38 18 56 24 Q44 30 30 34Z" fill="#5f9e4f" />
+        <path d="M60 50 C58 40 68 34 78 36 C88 36 92 44 90 50 C86 58 64 58 60 50Z" fill="#b3a387" stroke="#6b5d43" strokeWidth="2.5" />
+        {/* batu kanan */}
+        <path d="M140 52 C136 38 150 28 166 30 C184 28 198 38 196 52 C192 62 146 62 140 52Z" fill="#b3a387" stroke="#6b5d43" strokeWidth="3" />
+        <path d="M150 38 Q160 32 172 34" stroke="#d6c9ae" strokeWidth="4" strokeLinecap="round" fill="none" />
+        <path d="M156 32 Q172 22 188 34 Q174 36 160 36Z" fill="#5f9e4f" />
+        <path d="M126 50 C124 42 132 38 140 40 C148 40 150 46 148 52 C144 58 128 58 126 50Z" fill="#a9b0b2" stroke="#646c72" strokeWidth="2.5" />
+        {/* kerikil */}
+        <ellipse cx="100" cy="52" rx="7" ry="4" fill="#c9c2ad" stroke="#8a826b" strokeWidth="1.5" />
+        <ellipse cx="114" cy="54" rx="5" ry="3" fill="#a9b0b2" stroke="#646c72" strokeWidth="1.5" />
+        {/* pakis & rumput di sekitar kolam */}
+        <g stroke="#3f8a55" strokeWidth="3" strokeLinecap="round" fill="none">
+          <path d="M8 56 Q4 40 -6 30 M12 56 Q14 38 8 22 M16 56 Q24 42 30 36" />
+          <path d="M204 58 Q210 42 220 34 M200 58 Q198 40 204 24 M196 58 Q190 44 184 40" />
+        </g>
+        <g fill="#62A66B">
+          <path d="M-6 30 q-4 -10 4 -14 q4 8 -4 14Z" />
+          <path d="M8 22 q-2 -12 6 -14 q2 10 -6 14Z" />
+          <path d="M220 34 q8 -8 12 0 q-6 6 -12 0Z" />
+          <path d="M204 24 q2 -12 10 -12 q-2 10 -10 12Z" />
+        </g>
+        <g fill="#e57f9a">
+          <circle cx="30" cy="36" r="3" />
+          <circle cx="184" cy="40" r="3" />
+        </g>
+      </svg>
     </div>
   );
 }

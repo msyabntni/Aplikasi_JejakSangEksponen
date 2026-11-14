@@ -195,7 +195,7 @@ export default function RegionPage() {
       </header>
 
       {/* ───── penanda bagian ───── */}
-      <div ref={topRef} className="sticky top-[60px] z-30 scroll-mt-16 border-b-2 border-bark/40 bg-jungle/95 backdrop-blur">
+      <div ref={topRef} className="sticky top-[60px] z-30 scroll-mt-16 border-b-2 border-bark/40 bg-jungle/95 motif-daun backdrop-blur">
         <ol className="no-scrollbar mx-auto flex max-w-4xl gap-1.5 overflow-x-auto px-3 py-2" aria-label="Bagian materi">
           {SECTIONS.map((x, k) => (
             <li key={x.id}>
@@ -412,7 +412,7 @@ export default function RegionPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 rounded-2xl bg-jungle p-4 text-cream">
+                <p className="mt-4 rounded-2xl bg-jungle motif-daun p-4 text-cream">
                   <b className="text-sun">Kesimpulan:</b> <MathText text={r.conclusion} />
                 </p>
               </Parchment>

@@ -170,6 +170,245 @@ function Marker({ id, status, onClick, preview, scale = 1 }) {
   );
 }
 
+/* ── Sungai Division River ───────────────────────────────────────────── */
+
+const SUNGAI =
+  "M-20 1110 C200 1060 380 1160 560 1110 C740 1060 860 1130 1020 1090 L1020 1170 C860 1210 740 1140 560 1190 C380 1240 200 1140 -20 1190 Z";
+/** Garis arus mengikuti lekuk sungai; dy menggeser lajur (0 = tengah). */
+const arus = (dy) => `M-20 ${1140 + dy} C200 ${1100 + dy} 380 ${1190 + dy} 560 ${1150 + dy} C740 ${1100 + dy} 860 ${1170 + dy} 1020 ${1130 + dy}`;
+
+/** Riak kecil yang hanyut terbawa arus: [lajur dy, durasi s, mulai s, skala]. */
+const RIAK = [
+  [-16, 13, 0, 1],
+  [-16, 13, -6.5, 0.8],
+  [-4, 11, -2, 1.1],
+  [-4, 11, -7.5, 0.9],
+  [8, 12, -4, 1],
+  [8, 12, -10, 0.8],
+  [20, 14, -1, 0.9],
+  [20, 14, -8, 1.1],
+  [30, 15, -5, 0.7],
+  [30, 15, -12, 0.8],
+  [-10, 16, -13, 0.7],
+  [14, 10, -3, 0.75],
+];
+
+/** Batu: [x, y, skala, jenis (0 abu-abu, 1 cokelat), berlumut]. */
+const BATU_TEPI = [
+  [28, 1101, 1, 0, true],
+  [60, 1093, 0.65, 1, false],
+  [120, 1092, 1.15, 0, true],
+  [442, 1121, 0.95, 1, true],
+  [470, 1117, 0.6, 0, false],
+  [800, 1093, 1, 0, true],
+  [834, 1097, 0.65, 1, false],
+  [905, 1100, 1.15, 1, true],
+  [975, 1095, 0.8, 0, false],
+  [30, 1188, 1, 1, true],
+  [150, 1180, 0.85, 0, false],
+  [178, 1185, 0.55, 1, false],
+  [310, 1196, 1.15, 0, true],
+  [420, 1207, 0.85, 1, false],
+  [560, 1194, 1, 0, true],
+  [592, 1188, 0.6, 1, false],
+  [850, 1184, 1.05, 0, true],
+  [952, 1185, 0.9, 1, false],
+];
+const BATU_AIR = [
+  [250, 1143, 0.9],
+  [516, 1160, 0.7],
+  [882, 1142, 0.8],
+];
+const RUMPUT_TEPI = [
+  [92, 1092],
+  [455, 1110],
+  [770, 1090],
+  [940, 1098],
+  [95, 1188],
+  [250, 1192],
+  [365, 1205],
+  [500, 1208],
+  [895, 1188],
+];
+
+function Batu({ x, y, s = 1, jenis = 0, lumut = false, basah = false }) {
+  const [isi, terang, gelap, garis] = jenis ? ["#b3a387", "#d6c9ae", "#8f805f", "#6b5d43"] : ["#a9b0b2", "#d4d9da", "#879096", "#646c72"];
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      {basah && <ellipse cx="0" cy="7" rx="24" ry="7" fill="#fff" opacity="0.55" />}
+      <path d="M-18 7 C-21 -3 -12 -13 -2 -13 C9 -14 19 -7 18 4 C17 11 -15 13 -18 7Z" fill={isi} stroke={garis} strokeWidth="2.5" />
+      <path d="M-16 6 C-8 10 8 10 16 5 C15 10 -12 12 -16 6Z" fill={gelap} />
+      <path d="M-10 -6 C-7 -10 0 -11 4 -9" stroke={terang} strokeWidth="3" strokeLinecap="round" fill="none" />
+      {lumut && <path d="M-6 -12 C-2 -15 6 -15 10 -11 C6 -9 -2 -9 -6 -12Z" fill="#5f9e4f" />}
+      {basah && <path d="M-18 6 C-8 1 8 1 18 4" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.8" />}
+    </g>
+  );
+}
+
+function Sungai() {
+  return (
+    <g>
+      <defs>
+        <clipPath id="klip-sungai">
+          <path d={SUNGAI} />
+        </clipPath>
+        <filter id="lembut-sungai" x="-10%" y="-50%" width="120%" height="200%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
+      </defs>
+      {/* tepi sungai: tanah & pasir basah */}
+      <path d={SUNGAI} fill="#a7845a" stroke="#93724a" strokeWidth="24" strokeLinejoin="round" />
+      <path d={SUNGAI} fill="none" stroke="#d8c08a" strokeWidth="12" strokeLinejoin="round" />
+      {/* air */}
+      <path d={SUNGAI} fill="#8ED6E8" />
+      <g clipPath="url(#klip-sungai)">
+        {/* alur dalam di tengah & air dangkal di tepi */}
+        <path d={arus(6)} stroke="#5fb4d4" strokeWidth="40" fill="none" opacity="0.6" filter="url(#lembut-sungai)" />
+        <path d={SUNGAI} fill="none" stroke="#cdf1f8" strokeWidth="12" opacity="0.75" />
+        {/* arus halus memanjang */}
+        {[
+          [-12, "90 220", 7],
+          [10, "60 260", 9],
+          [24, "120 300", 11],
+        ].map(([dy, dash, dur], i) => (
+          <path key={i} d={arus(dy)} stroke="#e9fbff" strokeWidth="2" fill="none" opacity="0.4" strokeLinecap="round" strokeDasharray={dash}>
+            <animate attributeName="stroke-dashoffset" from="0" to="-620" dur={`${dur}s`} repeatCount="indefinite" />
+          </path>
+        ))}
+        {/* riak gelombang yang hanyut */}
+        {RIAK.map(([dy, dur, mulai, sk], i) => (
+          <g key={i} opacity="0">
+            <path
+              d={`M${-14 * sk} 0 q${5 * sk} ${-6 * sk} ${10 * sk} 0 q${5 * sk} ${-6 * sk} ${10 * sk} 0 q${4 * sk} ${-5 * sk} ${8 * sk} 0`}
+              stroke="#fff"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <animateMotion dur={`${dur}s`} begin={`${mulai}s`} repeatCount="indefinite" rotate="auto" path={arus(dy)} />
+            <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.12;0.85;1" dur={`${dur}s`} begin={`${mulai}s`} repeatCount="indefinite" />
+          </g>
+        ))}
+        {/* kilau cahaya di permukaan */}
+        {[
+          [90, 1128],
+          [340, 1160],
+          [610, 1130],
+          [960, 1122],
+        ].map(([x, y], i) => (
+          <path
+            key={i}
+            d={`M${x} ${y - 6} L${x + 2} ${y} L${x} ${y + 6} L${x - 2} ${y}Z M${x - 6} ${y} L${x} ${y - 2} L${x + 6} ${y} L${x} ${y + 2}Z`}
+            fill="#fff"
+            className="twinkle"
+            style={{ animationDelay: `${i * 0.55}s` }}
+          />
+        ))}
+      </g>
+      {/* batu di dalam air + lingkaran riak */}
+      {BATU_AIR.map(([x, y, sk], i) => (
+        <g key={i}>
+          <ellipse cx={x} cy={y + 6} rx={26 * sk} ry={8 * sk} fill="none" stroke="#fff" strokeWidth="2" opacity="0">
+            <animate attributeName="rx" values={`${20 * sk};${40 * sk}`} dur="2.6s" begin={`${i * 0.8}s`} repeatCount="indefinite" />
+            <animate attributeName="ry" values={`${6 * sk};${13 * sk}`} dur="2.6s" begin={`${i * 0.8}s`} repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;0" dur="2.6s" begin={`${i * 0.8}s`} repeatCount="indefinite" />
+          </ellipse>
+          <path
+            d={`M${x + 18 * sk} ${y + 4} q${10 * sk} -3 ${20 * sk} 2 M${x + 20 * sk} ${y + 10} q${12 * sk} -2 ${22 * sk} 3`}
+            stroke="#fff"
+            strokeWidth="2"
+            fill="none"
+            opacity="0.7"
+            strokeLinecap="round"
+          />
+          <Batu x={x} y={y} s={sk} jenis={i % 2} basah />
+        </g>
+      ))}
+      {/* bebatuan & rumput di tepi sungai */}
+      {BATU_TEPI.map(([x, y, sk, jenis, lumut], i) => (
+        <Batu key={i} x={x} y={y} s={sk} jenis={jenis} lumut={lumut} />
+      ))}
+      {RUMPUT_TEPI.map(([x, y], i) => (
+        <path
+          key={i}
+          d={`M${x} ${y} l-6 -12 M${x} ${y} l-1 -15 M${x} ${y} l5 -13 M${x} ${y} l9 -8`}
+          stroke={i % 2 ? "#3f8a55" : "#4f9a5a"}
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+      ))}
+    </g>
+  );
+}
+
+/** Jembatan kayu: membentang lurus di atas titik jalur menyeberang (593,1102) → (724,1171), bertumpu di kedua tepi. */
+function Jembatan() {
+  const papan = [];
+  for (let x = -96; x <= 96; x += 12) papan.push(x);
+  const tiang = [-92, -31, 31, 92];
+  return (
+    <g>
+      {/* bayangan jembatan di air */}
+      <g transform="translate(661 1149) rotate(27.8)" opacity="0.22">
+        <rect x="-90" y="-26" width="180" height="56" rx="8" fill="#1f5f78" />
+      </g>
+      <g transform="translate(658 1137) rotate(27.8)">
+        {/* pangkal batu di kedua tepi */}
+        {[-1, 1].map((sisi) => (
+          <g key={sisi} transform={`translate(${sisi * 95} 0)`}>
+            <ellipse cx="0" cy="0" rx="11" ry="36" fill="#9c8f78" stroke="#6b604e" strokeWidth="3" />
+            {[-24, -8, 8, 24].map((y, k) => (
+              <ellipse key={y} cx={(k % 2 ? 2 : -2) * sisi} cy={y} rx="8" ry="7" fill={k % 2 ? "#b8ab92" : "#a89a80"} stroke="#6b604e" strokeWidth="2" />
+            ))}
+          </g>
+        ))}
+        {/* balok penyangga */}
+        <rect x="-102" y="-23" width="204" height="9" rx="4" fill="#5a3a28" />
+        <rect x="-102" y="14" width="204" height="9" rx="4" fill="#5a3a28" />
+        {/* papan lantai */}
+        {papan.map((x, i) => (
+          <g key={x}>
+            <rect
+              x={x - 5.5}
+              y={-27 - (i % 3 === 1 ? 1 : 0)}
+              width="11"
+              height={54 + (i % 2)}
+              rx="2"
+              fill={i % 2 ? "#a06c48" : "#ad7a52"}
+              stroke="#5a3a28"
+              strokeWidth="1.6"
+            />
+            <path d={`M${x - 2} -18 v${10 + (i % 3) * 4} M${x + 2} 6 v${8 + (i % 2) * 5}`} stroke="#7d5236" strokeWidth="1" opacity="0.7" />
+          </g>
+        ))}
+        {/* tali pegangan & tiang */}
+        {[-31, 31].map((y) => {
+          const d = `M-92 ${y} Q-61 ${y + Math.sign(y) * 4} -31 ${y} Q0 ${y + Math.sign(y) * 4} 31 ${y} Q61 ${y + Math.sign(y) * 4} 92 ${y}`;
+          return (
+            <g key={y}>
+              <path d={d} stroke="#754B35" strokeWidth="5.5" fill="none" strokeLinecap="round" />
+              <path d={d} stroke="#e3c98f" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeDasharray="5 3" />
+              {tiang.map((x) => (
+                <g key={x}>
+                  <circle cx={x} cy={y} r="7" fill="#6b4228" stroke="#3e2718" strokeWidth="2.5" />
+                  <circle cx={x - 1.5} cy={y - 1.5} r="2.6" fill="#a06c48" />
+                </g>
+              ))}
+            </g>
+          );
+        })}
+      </g>
+      {/* buih kecil di kaki tiang tengah */}
+      {[
+        [714, 1129],
+        [630, 1155],
+      ].map(([x, y], i) => (
+        <path key={i} d={`M${x - 8} ${y} q4 -4 8 0 q4 -4 8 0`} stroke="#fff" strokeWidth="2" fill="none" opacity="0.75" strokeLinecap="round" />
+      ))}
+    </g>
+  );
+}
+
 /** Ukuran Naru di peta (satuan peta). Tinggi = proporsi gambar bergelantungan (200 × 280). */
 const NARU_W = 170;
 const NARU_H = 238;
@@ -226,20 +465,7 @@ export function AdventureMap({ statuses, onSelect, naruAt, preview, markerScale 
       {/* gua & batu gelap area */}
       <ellipse cx="760" cy="760" rx="260" ry="150" fill="#6f6a8f" opacity="0.35" />
       {/* sungai melintas */}
-      <path
-        d="M-20 1110 C200 1060 380 1160 560 1110 C740 1060 860 1130 1020 1090 L1020 1170 C860 1210 740 1140 560 1190 C380 1240 200 1140 -20 1190 Z"
-        fill="#8ED6E8"
-      />
-      <path
-        d="M-20 1140 C200 1100 380 1190 560 1150 C740 1100 860 1170 1020 1130"
-        stroke="#fff"
-        strokeWidth="4"
-        strokeDasharray="20 30"
-        fill="none"
-        opacity="0.7"
-      >
-        <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3s" repeatCount="indefinite" />
-      </path>
+      <Sungai />
       {/* air terjun dekat gunung */}
       <rect x="880" y="470" width="40" height="190" rx="18" fill="#bfeaf3" />
       <rect x="880" y="470" width="40" height="190" rx="18" fill="#fff" opacity="0.4">
@@ -281,13 +507,8 @@ export function AdventureMap({ statuses, onSelect, naruAt, preview, markerScale 
       <path d={TRAIL} stroke="#c9a96a" strokeWidth="34" fill="none" strokeLinecap="round" />
       <path d={TRAIL} stroke="#e3c98f" strokeWidth="24" fill="none" strokeLinecap="round" />
       <path d={TRAIL} stroke="#754B35" strokeWidth="7" fill="none" strokeDasharray="2 26" strokeLinecap="round" opacity="0.55" />
-      {/* jembatan kayu di atas sungai */}
-      <g transform="translate(470 1120) rotate(-12)">
-        {[-48, -32, -16, 0, 16, 32, 48].map((x) => (
-          <rect key={x} x={x - 6} y="-40" width="12" height="80" fill="#a06c48" stroke="#5a3a28" strokeWidth="2" />
-        ))}
-        <path d="M-60 -40 H60 M-60 40 H60" stroke="#5a3a28" strokeWidth="4" />
-      </g>
+      {/* jembatan kayu di atas sungai (tepat di titik jalur menyeberang) */}
+      <Jembatan />
       {REGIONS.map((r) => (
         <Marker key={r.id} id={r.id} status={st(r.id)} onClick={onSelect ? () => onSelect(r.id) : undefined} preview={preview} scale={markerScale} />
       ))}

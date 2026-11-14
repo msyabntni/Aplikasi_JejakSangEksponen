@@ -5,7 +5,7 @@ import { HangingVines, Fireflies } from "../scenery/Scenery";
 export function LoadingScreen({ text = "Naru sedang mencari jejak..." }) {
   return (
     <div
-      className="relative grid min-h-dvh place-items-center overflow-hidden bg-[radial-gradient(circle_at_50%_40%,#246B45,#173F2A_70%)]"
+      className="relative grid min-h-dvh place-items-center overflow-hidden motif-daun [--bg:radial-gradient(circle_at_50%_40%,#246B45,#173F2A_70%)]"
       role="status"
       aria-live="polite"
     >

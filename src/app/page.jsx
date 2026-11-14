@@ -75,7 +75,7 @@ function Landing() {
   };
 
   return (
-    <div className="overflow-x-clip bg-jungle text-cream">
+    <div className="overflow-x-clip bg-jungle motif-daun text-cream">
       {/* ───────── HERO ───────── */}
       <JungleBackdrop className="min-h-[100svh]" sky={["#9fd8c0", "#e9f0d8"]} fireflies={10}>
         <header className="relative z-30 flex items-center justify-between px-4 pt-3 sm:px-8">
@@ -162,7 +162,7 @@ function Landing() {
       </JungleBackdrop>
 
       {/* ───────── PERKENALAN ───────── */}
-      <section className="relative bg-[linear-gradient(180deg,#2f6d35,#173F2A)] px-4 py-16">
+      <section className="relative motif-daun [--bg:linear-gradient(180deg,#2f6d35,#173F2A)] px-4 py-16">
         <div className="mx-auto max-w-5xl">
           <div className="mb-10 text-center">
             <WoodSign>TEMAN PERJALANANMU</WoodSign>
@@ -231,7 +231,7 @@ function Landing() {
       </section>
 
       {/* ───────── PREVIEW PETA & CUPLIKAN ───────── */}
-      <section className="bg-[linear-gradient(180deg,#173F2A,#246B45)] px-4 py-16">
+      <section className="motif-daun [--bg:linear-gradient(180deg,#173F2A,#246B45)] px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8 text-center">
             <WoodSign>PETA PETUALANGAN</WoodSign>
@@ -296,7 +296,7 @@ function Landing() {
       </section>
 
       {/* ───────── CARA BERMAIN ───────── */}
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#246B45,#173F2A)] px-4 py-16">
+      <section className="relative overflow-hidden motif-daun [--bg:linear-gradient(180deg,#246B45,#173F2A)] px-4 py-16">
         <div className="mx-auto max-w-4xl">
           <div className="mb-10 text-center">
             <WoodSign>CARA BERMAIN</WoodSign>
@@ -326,7 +326,7 @@ function Landing() {
       {/* ───────── IDENTITAS PENGEMBANG ───────── */}
       <DeveloperCard />
 
-      <footer className="border-t-4 border-bark bg-[#0f2a1c] px-4 py-6 text-center text-sm text-cream/70">
+      <footer className="border-t-4 border-bark bg-[#0f2a1c] motif-daun px-4 py-6 text-center text-sm text-cream/70">
         <div className="flex items-center justify-center gap-2">
           <Gem size={16} /> JEJAK SANG EKSPONEN — media pembelajaran sifat-sifat bilangan berpangkat untuk SMP kelas VIII
         </div>

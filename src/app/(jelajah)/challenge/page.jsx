@@ -44,7 +44,7 @@ export default function ChallengePage() {
   if (run) {
     const L = CHALLENGE_LEVELS[run.level - 1];
     return (
-      <div className="relative min-h-[80vh] bg-[radial-gradient(ellipse_at_50%_0%,#754B35,#173F2A_65%)] px-4 py-6">
+      <div className="relative min-h-[80vh] motif-daun [--bg:radial-gradient(ellipse_at_50%_0%,#754B35,#173F2A_65%)] px-4 py-6">
         <div className="mx-auto max-w-3xl">
           <Speech who="naru" pose="hang" size={70} className="mb-4" text={L.naru} />
           <ExamRunner
@@ -106,7 +106,7 @@ export default function ChallengePage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_50%_0%,#a06c48,#5a3a28_45%,#173F2A)] px-4 pb-8 pt-8">
+      <section className="relative overflow-hidden motif-daun [--bg:radial-gradient(ellipse_at_50%_0%,#a06c48,#5a3a28_45%,#173F2A)] px-4 pb-8 pt-8">
         <HangingVines count={7} seed={13} />
         <Fireflies count={12} />
         <div className="relative z-20 mx-auto max-w-5xl">

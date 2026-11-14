@@ -107,7 +107,7 @@ export function RegionMission({ region, onDone }) {
   }
 
   return (
-    <div className="rounded-3xl bg-jungle p-3 sm:p-5">
+    <div className="rounded-3xl bg-jungle motif-daun p-3 sm:p-5">
       <div className="mb-4 flex items-start gap-3 text-cream">
         <Target className="mt-1 shrink-0 text-sun" />
         <div>

@@ -13,7 +13,7 @@ export default function GameHub() {
   const j = s.journey;
   return (
     <div>
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#5a3a28,#173F2A)] px-4 pb-6 pt-8">
+      <section className="relative overflow-hidden motif-daun [--bg:linear-gradient(180deg,#5a3a28,#173F2A)] px-4 pb-6 pt-8">
         <HangingVines count={6} seed={11} />
         <Fireflies count={8} />
         <div className="relative z-20 mx-auto flex max-w-5xl items-end gap-4">

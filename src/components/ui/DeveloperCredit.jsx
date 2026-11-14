@@ -13,7 +13,7 @@ export const DEVELOPER = {
 export function DeveloperCard() {
   const d = DEVELOPER;
   return (
-    <section aria-label="Identitas pengembang" className="relative overflow-hidden bg-[linear-gradient(180deg,#173F2A,#0f2a1c)] px-4 pb-10 pt-4">
+    <section aria-label="Identitas pengembang" className="relative overflow-hidden motif-daun [--bg:linear-gradient(180deg,#173F2A,#0f2a1c)] px-4 pb-10 pt-4">
       <div className="parchment relative mx-auto max-w-sm rounded-2xl px-6 py-5 text-center">
         <Leaf className="pointer-events-none absolute -left-1 top-3 w-6 -rotate-45 opacity-70" color="#62A66B" />
         <Leaf className="pointer-events-none absolute -right-1 top-3 w-6 rotate-45 opacity-70" color="#62A66B" />
@@ -67,7 +67,7 @@ export function DeveloperFooterLine({ className = "" }) {
 /** Footer kecil untuk halaman di dalam aplikasi (Camp, Peta, materi, dll.). */
 export function AppFooter() {
   return (
-    <footer className="border-t-2 border-bark/60 bg-[#0f2a1c] px-4 py-3 text-center text-cream/70" aria-label="Identitas pengembang">
+    <footer className="border-t-2 border-bark/60 bg-[#0f2a1c] motif-daun px-4 py-3 text-center text-cream/70" aria-label="Identitas pengembang">
       <DeveloperFooterLine />
       <p className="mt-0.5 text-[11px] opacity-70">JEJAK SANG EKSPONEN — media pembelajaran sifat-sifat bilangan berpangkat</p>
     </footer>

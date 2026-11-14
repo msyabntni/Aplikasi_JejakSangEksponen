@@ -44,7 +44,7 @@ export default function ProfilPage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#246B45,#173F2A)] px-4 pb-6 pt-10">
+      <section className="relative overflow-hidden motif-daun [--bg:linear-gradient(180deg,#246B45,#173F2A)] px-4 pb-6 pt-10">
         <HangingVines count={5} seed={17} />
         <div className="relative z-20 mx-auto flex max-w-4xl flex-wrap items-end gap-4">
           <div className="rounded-full bg-sun p-1.5 shadow-[0_6px_0_#a57b1f]">
@@ -78,7 +78,7 @@ export default function ProfilPage() {
               </span>
             )}
           </div>
-          <div className="mt-3 rounded-2xl bg-jungle p-3 text-cream">
+          <div className="mt-3 rounded-2xl bg-jungle motif-daun p-3 text-cream">
             <div className="flex justify-between font-display font-bold">
               <span>{s.xp} XP</span>
               <span className="flex items-center gap-1">
