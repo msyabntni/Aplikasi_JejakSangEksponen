@@ -23,6 +23,7 @@ JEJAK SANG EKSPONEN adalah media pembelajaran matematika berbasis web untuk sisw
 | Jungle Challenge | 3 level berurutan, timer opsional, bantuan Kaciro, pembahasan setelah dikirim |
 | Posttest | Posttest paralel dengan pretest, lengkap dengan pembahasan |
 | Hasil Belajar (rapor) | Identitas, nilai pretest/posttest dan selisihnya, grafik/tabel per indikator, nilai misi tiap wilayah, latihan, Jungle Challenge, mini-game, lencana, serta tombol cetak/simpan PDF |
+| Musik latar | MP3 milik pengguna diputar dari URL eksternal (`src/components/layout/BackgroundMusic.jsx`). Otomatis diputar saat website dibuka; jika autoplay diblokir browser, muncul tombol **Putar musik latar** (musik juga mulai pada sentuhan pertama). Volume awal 18%. Tombol musik di header berisi ON/OFF dan pengatur volume (tersimpan). Musik tidak terputus saat pindah halaman |
 | Gamifikasi | XP idempoten, 7 level, permata, 9 lencana, notifikasi hadiah dan naik level |
 | Profil & riwayat | Ubah nama panggilan, kelas, dan avatar; riwayat aktivitas yang bisa difilter |
 | Mode tamu | Berjalan penuh tanpa login. Data tersimpan di localStorage dengan versi dan migrasi |
@@ -150,6 +151,7 @@ docs/                        Panduan Supabase, pengujian, deployment
 | `npm run test:py` | Uji backend Python (unittest), termasuk uji kesetaraan dengan JavaScript |
 | `npm run test:e2e` | Uji alur lengkap di browser (Playwright). Server harus berjalan di port 3123 |
 | `npm run test:journey` | Memainkan seluruh perjalanan lewat UI: pretest, 7 wilayah, 3 level challenge, posttest, XP, dan lencana |
+| `npm run test:music` | Uji musik latar: autoplay, autoplay diblokir, volume awal, ON/OFF, volume, berpindah halaman |
 | `npm run test:games` | Memainkan keenam mini-game sampai halaman hasil (Playwright) |
 | `npm run test:sql` | Uji skema SQL, RLS, dan fungsi RPC di PostgreSQL WASM (tanpa proyek Supabase) |
 | `npm run seed:generate` | Membuat ulang `supabase/seed.sql` setelah soal diubah |

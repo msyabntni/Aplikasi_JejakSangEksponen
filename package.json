@@ -14,7 +14,8 @@
     "test:journey": "node --import ./scripts/alias-loader.mjs scripts/journey-e2e.mjs",
     "py:data": "node --import ./scripts/alias-loader.mjs scripts/export-python-data.mjs",
     "py:dev": "python backend/dev_server.py",
-    "test:py": "python -m unittest discover -s tests -v"
+    "test:py": "python -m unittest discover -s tests -v",
+    "test:music": "node scripts/music-e2e.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

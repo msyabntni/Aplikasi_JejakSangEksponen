@@ -1,5 +1,8 @@
 import { SAVE_VERSION } from "./types";
 
+/** volume awal musik latar: 18% (lembut) */
+export const MUSIC_DEFAULT_VOLUME = 0.18;
+
 export const STORAGE_KEY = "jejak-sang-eksponen";
 
 export function uid(prefix = "id") {
@@ -14,7 +17,7 @@ export function emptySave() {
     journeys: [],
     pretests: [],
     posttests: [],
-    settings: { sound: true, motion: "auto" },
+    settings: { sound: true, motion: "auto", music: true, musicVolume: MUSIC_DEFAULT_VOLUME },
     importedTo: [],
   };
 }
@@ -109,6 +112,8 @@ export function migrate(raw) {
     out.settings = {
       sound: typeof s.sound === "boolean" ? s.sound : true,
       motion: s.motion === "on" || s.motion === "off" ? s.motion : "auto",
+      music: typeof s.music === "boolean" ? s.music : true,
+      musicVolume: typeof s.musicVolume === "number" && s.musicVolume >= 0 && s.musicVolume <= 1 ? s.musicVolume : MUSIC_DEFAULT_VOLUME,
     };
   }
   return out;

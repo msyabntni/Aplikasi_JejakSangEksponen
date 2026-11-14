@@ -1,7 +1,8 @@
 "use client";
 
-import { Info, Sparkles, Volume2, VolumeX } from "lucide-react";
-import { useState } from "react";
+import { Info, Music, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useMusic } from "./BackgroundMusic";
 import { useStore } from "@/lib/store/ProgressProvider";
 import { Modal } from "../ui/Panels";
 import Naru from "../characters/Naru";
@@ -39,6 +40,85 @@ export function InfoModal({ open, onClose }) {
   );
 }
 
+/** Tombol musik latar: panel kecil berisi ON/OFF dan pengatur volume. */
+function MusicControl({ btn }) {
+  const m = useMusic();
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e) => wrap.current && !wrap.current.contains(e.target) && setOpen(false);
+    const esc = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("pointerdown", close);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("pointerdown", close);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+  if (!m) return null;
+  const state = m.playing ? "playing" : m.error ? "error" : m.on && m.blocked ? "blocked" : m.on ? "loading" : "off";
+  const status = {
+    playing: "Sedang diputar",
+    loading: "Memuat musik...",
+    blocked: "Diblokir browser. Tekan Putar.",
+    off: "Musik mati",
+    error: m.error,
+  }[state];
+  const pct = Math.round(m.volume * 100);
+  return (
+    <div className="relative" ref={wrap}>
+      <button
+        className={`${btn} ${m.on ? "" : "opacity-60"}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-label="Pengaturan musik latar"
+        aria-expanded={open}
+        title={`Musik latar: ${m.on ? "ON" : "OFF"}`}
+        data-music-state={state}
+      >
+        <Music size={18} className={m.playing ? "animate-bob" : ""} style={{ animationDuration: "1.6s" }} />
+      </button>
+      {open && (
+        <div className="parchment animate-pop absolute right-0 top-12 z-[70] w-64 rounded-2xl p-3 text-left text-jungle" role="dialog" aria-label="Musik latar">
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-display text-base font-extrabold">Musik latar</span>
+            <button
+              onClick={() => m.setOn(!m.on)}
+              role="switch"
+              aria-checked={m.on}
+              aria-label={m.on ? "Matikan musik latar" : "Hidupkan musik latar"}
+              className={`relative h-8 w-16 rounded-full border-2 font-display text-xs font-extrabold transition ${m.on ? "border-forest bg-leaf text-white" : "border-earth/30 bg-white text-earth"}`}
+            >
+              <span className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-all ${m.on ? "left-[34px]" : "left-0.5 bg-cream"}`} />
+              <span className={`absolute top-1.5 ${m.on ? "left-2" : "right-2"}`}>{m.on ? "ON" : "OFF"}</span>
+            </button>
+          </div>
+          <label className="mt-3 block text-sm font-bold" htmlFor="music-volume">
+            Volume: <span data-music-volume>{pct}%</span>
+          </label>
+          <input
+            id="music-volume"
+            type="range"
+            min={0}
+            max={100}
+            step={1}
+            value={pct}
+            onChange={(e) => m.setVolume(Number(e.target.value) / 100)}
+            className="mt-1 w-full accent-[#F39B57]"
+            aria-label="Volume musik latar"
+          />
+          <p className={`mt-2 text-xs font-semibold ${state === "error" ? "text-[#a3321c]" : "text-earth"}`}>{status}</p>
+          {state === "blocked" && (
+            <button onClick={() => void m.start()} className="btn-game mt-2 w-full rounded-xl bg-orange py-1.5 font-display text-sm font-extrabold text-[#4a2410] shadow-[0_3px_0_#a3521c]">
+              Putar musik
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function TopControls({ dark }) {
   const { settings, setSettings } = useStore();
   const [info, setInfo] = useState(false);
@@ -48,6 +128,7 @@ export function TopControls({ dark }) {
   }`;
   return (
     <div className="flex items-center gap-1.5">
+      <MusicControl btn={btn} />
       <button
         className={btn}
         onClick={() => setSettings({ sound: !settings.sound })}

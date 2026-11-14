@@ -3,6 +3,7 @@ import "./globals.css";
 import { ProgressProvider } from "@/lib/store/ProgressProvider";
 import { RewardToaster } from "@/components/layout/RewardToaster";
 import { MotionSync } from "@/components/layout/MotionSync";
+import { MusicProvider } from "@/components/layout/BackgroundMusic";
 
 const baloo = Baloo_2({ subsets: ["latin"], variable: "--font-baloo", weight: ["500", "600", "700", "800"] });
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", weight: ["400", "600", "700", "800"] });
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
     <html lang="id" className={`${baloo.variable} ${nunito.variable}`}>
       <body className="min-h-dvh antialiased">
         <ProgressProvider>
-          <MotionSync />
-          {children}
-          <RewardToaster />
+          <MusicProvider>
+            <MotionSync />
+            {children}
+            <RewardToaster />
+          </MusicProvider>
         </ProgressProvider>
       </body>
     </html>

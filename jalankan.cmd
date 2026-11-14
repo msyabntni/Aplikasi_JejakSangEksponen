@@ -8,7 +8,15 @@ where node >nul 2>nul || (echo Node.js tidak ditemukan. Lihat README bagian "Men
 cd /d "%~dp0"
 set NEXT_TELEMETRY_DISABLED=1
 if not exist node_modules (echo Menginstal dependency... & call npm install || (pause & exit /b 1))
-if not exist .next\BUILD_ID (echo Membangun aplikasi... & call npm run build || (pause & exit /b 1))
+if exist .next\BUILD_ID goto :siap
+echo Membangun aplikasi...
+call npm run build && goto :siap
+rem OneDrive kadang mengunci folder .next (berkas "online-only"); bersihkan lalu coba lagi.
+echo Build gagal, membersihkan folder .next lalu mencoba lagi...
+attrib -R -P +U ".next\*" /S /D >nul 2>&1
+rmdir /s /q .next >nul 2>&1
+call npm run build || (pause & exit /b 1)
+:siap
 echo.
 echo   JEJAK SANG EKSPONEN berjalan di http://localhost:3000
 echo   Tekan Ctrl+C untuk berhenti.
