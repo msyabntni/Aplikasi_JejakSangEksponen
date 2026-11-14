@@ -24,6 +24,7 @@ import { Parchment, Speech, WoodSign } from "@/components/ui/Panels";
 import { Logo } from "@/components/ui/Logo";
 import { TopControls } from "@/components/layout/TopControls";
 import { AdventureMap } from "@/components/map/AdventureMap";
+import { DeveloperCard, DeveloperFooterLine } from "@/components/ui/DeveloperCredit";
 import { useStore } from "@/lib/store/ProgressProvider";
 import { REGIONS } from "@/data/regions";
 
@@ -322,10 +323,14 @@ function Landing() {
         </div>
       </section>
 
+      {/* ───────── IDENTITAS PENGEMBANG ───────── */}
+      <DeveloperCard />
+
       <footer className="border-t-4 border-bark bg-[#0f2a1c] px-4 py-6 text-center text-sm text-cream/70">
         <div className="flex items-center justify-center gap-2">
           <Gem size={16} /> JEJAK SANG EKSPONEN — media pembelajaran sifat-sifat bilangan berpangkat untuk SMP kelas VIII
         </div>
+        <DeveloperFooterLine className="mt-2 text-cream/80" />
         <div className="mt-1">
           <Link href="/karakter" className="underline hover:text-sun">
             Lembar referensi karakter

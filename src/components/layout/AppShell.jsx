@@ -9,6 +9,7 @@ import { posttestUnlocked } from "@/lib/unlock";
 import { Logo } from "../ui/Logo";
 import { TopControls } from "./TopControls";
 import { Compass, Gem } from "../scenery/Scenery";
+import { AppFooter } from "../ui/DeveloperCredit";
 import { LoadingScreen } from "./LoadingScreen";
 
 const NAV = [
@@ -97,7 +98,10 @@ export function AppShell({ children }) {
           </div>
         </header>
 
-        <main className={`flex-1 ${navOn ? "pb-24 md:pb-0" : ""}`}>{children}</main>
+        <main className={`flex flex-1 flex-col ${navOn ? "pb-24 md:pb-0" : ""}`}>
+          <div className="flex-1">{children}</div>
+          <AppFooter />
+        </main>
       </div>
 
       {/* navigasi bawah (smartphone) */}

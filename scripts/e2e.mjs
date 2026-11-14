@@ -31,6 +31,29 @@ await page.goto(BASE);
 await page.getByText("SIAP MENEMUKAN RAHASIA").waitFor();
 await shot("01-landing-mobile");
 check("landing tanpa scroll horizontal (360px)", await noHScroll());
+{
+  const kartu = page.getByRole("region", { name: "Identitas pengembang" });
+  const teks = (await kartu.innerText()).replace(/\s+/g, " ");
+  check(
+    "identitas pengembang tampil di halaman pembuka",
+    ["Dikembangkan oleh:", "Masya Bantani", "Program Studi Pendidikan Matematika", "Fakultas Keguruan dan Ilmu Pendidikan", "Universitas Sultan Ageng Tirtayasa", "2026"].every((t) => teks.toLowerCase().includes(t.toLowerCase())),
+    teks,
+  );
+  await kartu.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${OUT}/00-identitas-pengembang.png` });
+  const footer = (await page.locator("footer").last().innerText()).replace(/\s+/g, " ");
+  const terpotong = await page.evaluate(() =>
+    [...document.querySelectorAll("footer p span.inline-block")].filter((el) => {
+      const r = el.getBoundingClientRect();
+      return r.left < 0 || r.right > document.documentElement.clientWidth + 0.5;
+    }).length,
+  );
+  check("footer identitas tidak terpotong di layar HP (360px)", terpotong === 0, `${terpotong} bagian terpotong`);
+  await page.locator("footer").last().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${OUT}/00-footer-hp.png` });
+  check("identitas pengembang ada di footer halaman pembuka", footer.includes("Masya Bantani") && footer.includes("Dikembangkan oleh:") && footer.includes("Universitas Sultan Ageng Tirtayasa"), footer);
+}
 await btn("LANJUTKAN JEJAK").click();
 check("lanjutkan jejak tanpa progres menampilkan pesan ramah", await page.getByText("Belum ada jejak tersimpan").isVisible());
 check("tombol akun nonaktif tanpa Supabase", await page.getByText("Mode akun belum dikonfigurasi").first().isVisible());
@@ -92,6 +115,7 @@ await page.getByText("Halo, Dimas!").waitFor();
 check("camp menampilkan nama penjelajah aktif", true);
 check("pretest tidak memberi XP", (await page.locator("header").first().innerText()).includes("0 XP"));
 await shot("05-camp-mobile");
+check("identitas pengembang ada di footer halaman aplikasi (Camp)", (await page.locator('footer[aria-label="Identitas pengembang"]').innerText()).includes("Universitas Sultan Ageng Tirtayasa"));
 check("camp tanpa scroll horizontal", await noHScroll());
 
 // ── 5. Peta ──
