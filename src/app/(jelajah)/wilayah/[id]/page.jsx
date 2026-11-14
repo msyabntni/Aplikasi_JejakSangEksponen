@@ -182,7 +182,8 @@ export default function RegionPage() {
         <div className="pointer-events-none absolute right-2 top-0 w-24 sm:right-10 sm:w-36">
           <Naru pose="hang" width="100%" />
         </div>
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-3">
+        {/* nama wilayah di bawah ilustrasi agar tidak menutupi gambar */}
+        <div className="px-4 pb-3 pt-3">
           <div className="mx-auto max-w-4xl">
             <span className="wood inline-block rounded-lg px-3 py-0.5 font-display text-sm font-extrabold tracking-widest">
               WILAYAH {r.code} dari 07 · {r.name}
