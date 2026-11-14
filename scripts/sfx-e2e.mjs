@@ -12,6 +12,7 @@ const FILE = {
   wrong: "1794662829499-43897551-516a-4dd5-a840-b694017d08be.mp3",
   badge: "1794662945511-d49936df-757f-42fb-9717-6e857d461a86.mp3",
   tap: "1794663109835-7b9e8038-4e5e-41b0-8474-089635da03b6.mp3",
+  done: "1794668451189-427d1fe6-39ad-46d0-a553-05749fc11f95.mp3",
 };
 const MUSIC = "1794652154846-925cd5a1-20e2-48c0-a981-291eb73a030c.mp3";
 let pass = 0, fail = 0;
@@ -167,6 +168,83 @@ await page.getByRole("link", { name: /Lab/ }).first().click();
 await page.waitForTimeout(400);
 log = await ambilLog();
 check("suara dihidupkan lagi → klik tombol berbunyi", log.some((l) => l.sfx === "tap"), JSON.stringify(log.map((l) => l.sfx)));
+
+// ── 6. suara "soal selesai": hanya saat SELURUH rangkaian soal selesai ──
+const siapkan = (pretest) =>
+  page.evaluate((pretest) => {
+    const now = new Date().toISOString();
+    localStorage.setItem("jejak-sang-eksponen", JSON.stringify({
+      version: 2, activeJourneyId: "j1",
+      journeys: [{ id: "j1", startedAt: now, explorer: { name: "Selesai", kelas: "VIII A", avatar: "daun", createdAt: now }, regions: {}, rewards: [], practice: [], games: [], gamesWon: [], labTried: [], challenge: [], missions: [], activity: [], seenBadges: [], seenLevel: 1 }],
+      pretests: pretest ? [{ id: "p", journeyId: "j1", explorerName: "Selesai", startedAt: now, finishedAt: now, answers: {}, perQuestion: [], correct: 5, wrong: 5, score: 50, byIndicator: {} }] : [],
+      posttests: [], settings: { sound: true, motion: "off", music: true, musicVolume: 0.18 }, importedTo: [],
+    }));
+  }, pretest);
+
+// 6a. misi wilayah: 5 soal
+await siapkan(true);
+await page.goto(`${BASE}/wilayah/1`);
+await page.getByText("WILAYAH 01 dari 07 ·").waitFor();
+await page.getByRole("button", { name: "Misi" }).first().click();
+const jawabMisi = [
+  async () => page.locator('[data-qid="m1-1"]').getByRole("radio").nth(0).click(),
+  async () => page.locator('[data-qid="m1-2"]').getByLabel("Jawaban").fill("5^2"),
+  async () => page.locator('[data-qid="m1-3"]').getByLabel("Jawaban").fill("16"),
+  async () => page.locator('[data-qid="m1-4"]').getByRole("button", { name: /^Bagian bawah/ }).click(),
+  async () => page.locator('[data-qid="m1-5"]').getByRole("button", { name: "SALAH", exact: true }).click(),
+];
+await ambilLog();
+const perSoal = [];
+for (let i = 0; i < 5; i++) {
+  await page.getByText(new RegExp(`Misi · Soal ${i + 1}/5`)).waitFor();
+  await page.waitForTimeout(350);
+  await jawabMisi[i]();
+  await page.getByRole("button", { name: "PERIKSA" }).click();
+  await page.waitForTimeout(250);
+  perSoal.push(...(await ambilLog()).map((l) => l.sfx));
+  if (i < 4) await page.getByRole("button", { name: "LANJUT" }).click();
+}
+check("selama mengerjakan 5 soal misi: tidak ada suara 'soal selesai'", !perSoal.includes("done"), perSoal.join(","));
+await page.getByRole("button", { name: "LIHAT HASIL" }).click();
+await page.getByText("Misi berhasil!").waitFor();
+await page.waitForTimeout(400);
+log = await ambilLog();
+const doneMisi = log.filter((l) => l.sfx === "done");
+check("misi selesai (semua soal) → suara 'soal selesai' dari file pengguna, sekali", doneMisi.length === 1 && doneMisi[0].src.endsWith(FILE.done), JSON.stringify(log.map((l) => l.sfx)));
+check("suara 'soal selesai' tidak bertumpuk & volume 60–75%", doneMisi[0] && doneMisi[0].lainBerbunyi.length === 0 && doneMisi[0].vol >= 0.6 && doneMisi[0].vol <= 0.75, JSON.stringify(doneMisi[0]));
+check("suara 'soal selesai' langsung berbunyi (mulai ±0,25 s)", doneMisi[0] && Math.abs(doneMisi[0].mulai - 0.25) < 0.05);
+check("musik latar tetap berjalan saat 'soal selesai'", doneMisi[0]?.musikJalan === true);
+
+// 6b. pretest: dikumpulkan
+await siapkan(false);
+await page.goto(`${BASE}/pretest`);
+await page.getByRole("button", { name: "MULAI PRETEST" }).click();
+await page.getByRole("button", { name: /^Soal 10/ }).click();
+await page.waitForTimeout(400);
+await page.getByRole("button", { name: "KUMPULKAN PRETEST" }).click();
+await ambilLog();
+await page.getByRole("button", { name: "Ya, kumpulkan" }).click();
+await page.waitForURL(/\/pretest\/hasil/);
+await page.waitForTimeout(400);
+log = await ambilLog();
+check("pretest dikumpulkan → suara 'soal selesai' sekali", log.filter((l) => l.sfx === "done").length === 1, JSON.stringify(log.map((l) => l.sfx)));
+
+// 6c. mini-game: Wrong or Right (6 kasus)
+await page.goto(`${BASE}/game/wrong-or-right`);
+await page.getByRole("button", { name: "MAIN SEKARANG" }).click();
+await ambilLog();
+const selamaGame = [];
+for (let c = 0; c < 6; c++) {
+  await page.getByRole("button", { name: "BENAR", exact: true }).click();
+  await page.waitForTimeout(150);
+  selamaGame.push(...(await ambilLog()).map((l) => l.sfx));
+  await page.getByRole("button", { name: /Kasus berikutnya|Lihat hasil/ }).click();
+}
+await page.getByText(/Kamu berhasil!|Hampir berhasil!/).waitFor();
+await page.waitForTimeout(400);
+log = await ambilLog();
+check("selama 6 kasus mini-game: tidak ada suara 'soal selesai'", !selamaGame.includes("done"), selamaGame.join(","));
+check("mini-game selesai → suara 'soal selesai' sekali", log.filter((l) => l.sfx === "done").length === 1, JSON.stringify(log.map((l) => l.sfx)));
 
 check("tidak ada error JavaScript", errors.length === 0, errors.slice(0, 2).join(" | "));
 await browser.close();

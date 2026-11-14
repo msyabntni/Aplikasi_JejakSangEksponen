@@ -357,6 +357,7 @@ function useStoreValue() {
           }
           pushActivity(jj, { type: kind, title: kind === "pretest" ? "Pretest dikumpulkan" : "Posttest dikumpulkan", score: attempt.score, status: "selesai" });
         });
+        play("done"); // seluruh soal pretest/posttest selesai
         if (kind === "posttest") grant("posttest", REWARDS.posttest, "Posttest selesai", serverXp);
         return attempt;
       },
@@ -413,6 +414,7 @@ function useStoreValue() {
             status: "selesai",
           });
         });
+        play("done"); // seluruh soal (misi / latihan) selesai
         return { score, correct, total, gradedBy };
       },
 
@@ -486,6 +488,7 @@ function useStoreValue() {
           });
         });
         grant(`practice:${level}`, REWARDS.practice, "Sesi latihan selesai", serverXp);
+        play("done"); // seluruh soal (misi / latihan) selesai
         return { score, correct, total, gradedBy };
       },
 
@@ -528,6 +531,7 @@ function useStoreValue() {
           });
         });
         if (passed) grant(`challenge:${level}`, REWARDS.challenge[level], `Jungle Challenge Level ${level}`, serverXp);
+        play("done"); // seluruh soal Jungle Challenge selesai
         return { score, correct, total, passed, gradedBy };
       },
 
@@ -547,6 +551,7 @@ function useStoreValue() {
           pushActivity(j, { type: "mini-game", title: `Mini-game ${title}`, detail: `${correct}/${total}`, score, status: won ? "selesai" : "dicoba" });
         });
         if (won) grant(`game:${game}`, REWARDS.game, `${title} selesai`, serverXp);
+        play("done"); // permainan (seluruh soal) selesai
       },
 
       async labTry(exp, title) {

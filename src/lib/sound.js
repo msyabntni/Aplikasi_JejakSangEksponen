@@ -7,6 +7,9 @@
  * lencana         .../1794662945511-...mp3           0,55 s → 9,74 s (frasa pembuka; file aslinya ±64 s)
  * klik/ketukan    .../1794663109835-...mp3           1,02 s → 1,20 s (klik pertama; file berisi 3 klik
  *                                                    dengan hening 1 s di awal)
+ * soal selesai    .../1794668451189-...mp3           0,25 s → selesai (±4 s), saat SELURUH rangkaian soal
+ *                                                    selesai: misi, latihan, Jungle Challenge, pretest,
+ *                                                    posttest, mini-game
  * File tidak diubah; hanya dipilih bagian yang diputar agar langsung berbunyi dan tidak bertumpuk.
  *
  * Aturan agar tidak bertumpuk:
@@ -25,6 +28,7 @@ export const SFX_FILES = {
   wrong: { src: "https://mp3tourl.com/audio/1794662829499-43897551-516a-4dd5-a840-b694017d08be.mp3", start: 0.15, end: null, prio: 2 },
   badge: { src: "https://mp3tourl.com/audio/1794662945511-d49936df-757f-42fb-9717-6e857d461a86.mp3", start: 0.55, end: 9.74, prio: 3 },
   tap: { src: "https://pdftourl.net/audio/1794663109835-7b9e8038-4e5e-41b0-8474-089635da03b6.mp3", start: 1.02, end: 1.2, prio: 1 },
+  done: { src: "https://pdftourl.net/audio/1794668451189-427d1fe6-39ad-46d0-a553-05749fc11f95.mp3", start: 0.25, end: null, prio: 2 },
 };
 
 let enabled = true;
@@ -95,7 +99,7 @@ function start(name) {
 
 /**
  * Memutar efek suara.
- * Nama yang dipakai aplikasi: "correct", "wrong", "badge", "tap".
+ * Nama yang dipakai aplikasi: "correct", "wrong", "badge", "tap", "done" (seluruh soal selesai).
  * Nama lama ("page", "unlock", "reward") tidak lagi berbunyi karena tidak ada file dari pengguna;
  * aktivitas tersebut sudah diawali klik (tap) sehingga tidak perlu suara tambahan.
  */
@@ -117,6 +121,8 @@ export function play(name) {
     clearTimeout(pendingTap);
     pendingTap = null;
   }
+  // suara "soal selesai" tidak memotong suara lencana yang sedang berbunyi
+  if (name === "done" && current && current.name === "badge" && !current.el.paused) return;
   start(name);
 }
 
