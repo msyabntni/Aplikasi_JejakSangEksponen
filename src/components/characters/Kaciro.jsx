@@ -48,6 +48,11 @@ function Eyes({ mood }) {
   );
 }
 
+/** Ukuran maskot: angka (px) atau CSS responsif, mis. "min(34vw, 160px)". Tinggi mengikuti proporsi. */
+function ukuran(width, style) {
+  return { width: typeof width === "number" ? `${width}px` : width, height: "auto", flexShrink: 0, ...style };
+}
+
 export default function Kaciro({
   pose = "idle",
   mood,
@@ -61,7 +66,7 @@ export default function Kaciro({
   const m = mood ?? (pose === "think" ? "think" : pose === "cheer" ? "proud" : "neutral");
   const a = ARMS[pose];
   return (
-    <svg viewBox="0 0 200 260" width={width} className={className} style={style} role="img" aria-label={title}>
+    <svg viewBox="0 0 200 260" className={className} style={ukuran(width, style)} role="img" aria-label={title}>
       <g className={animate ? "animate-bob" : ""} style={{ animationDuration: "3.6s" }}>
         {/* ekor kecil */}
         <path d="M122 198 Q136 192 134 206 Q128 208 122 204Z" fill={C.cream} />

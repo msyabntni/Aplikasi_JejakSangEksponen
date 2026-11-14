@@ -78,7 +78,7 @@ export function GameShell({ meta, Game }) {
       {phase === "result" && res && (
         <Parchment className="animate-pop text-center">
           <div className="flex items-end justify-center gap-3">
-            <Naru pose={res.won ? "cheer" : "idle"} mood={res.won ? "cheer" : "worried"} width={120} />
+            <Naru pose={res.won ? "cheer" : "idle"} mood={res.won ? "cheer" : "worried"} width="min(40vw, 160px)" />
             {res.won && <TreasureChest open width={110} />}
           </div>
           <h2 className="mt-2 font-display text-3xl font-extrabold text-jungle">{res.won ? "Kamu berhasil!" : "Hampir berhasil!"}</h2>

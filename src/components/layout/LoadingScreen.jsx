@@ -12,7 +12,7 @@ export function LoadingScreen({ text = "Naru sedang mencari jejak..." }) {
       <HangingVines count={6} />
       <Fireflies count={14} />
       <div className="flex flex-col items-center gap-3 text-center">
-        <Naru pose="swing" width={150} />
+        <Naru pose="swing" width={190} />
         <p className="font-display text-xl font-bold text-cream">{text}</p>
         <div className="flex gap-2" aria-hidden>
           {[0, 1, 2].map((i) => (

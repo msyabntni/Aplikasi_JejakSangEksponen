@@ -55,7 +55,7 @@ export default function LabPage() {
               text="Selamat datang di laboratoriumku! Di sini kamu bisa bereksperimen dengan bilangan berpangkat dan melihat penjelasan setiap hasilnya."
             />
           </div>
-          <div className="hidden w-28 md:block">
+          <div className="hidden w-36 shrink-0 md:block lg:w-44">
             <Naru pose="hang" width="100%" />
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function LabPage() {
           <e.C onTry={() => void s.labTry(e.id, e.name)} />
         </div>
         <div className="mt-5 flex justify-end">
-          <Kaciro pose="think" width={90} />
+          <Kaciro pose="think" width={130} />
         </div>
       </div>
     </div>

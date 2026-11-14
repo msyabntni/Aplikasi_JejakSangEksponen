@@ -152,6 +152,7 @@ docs/                        Panduan Supabase, pengujian, deployment
 | `npm run test:py` | Uji backend Python (unittest), termasuk uji kesetaraan dengan JavaScript |
 | `npm run test:e2e` | Uji alur lengkap di browser (Playwright). Server harus berjalan di port 3123 |
 | `npm run test:journey` | Memainkan seluruh perjalanan lewat UI: pretest, 7 wilayah, 3 level challenge, posttest, XP, dan lencana |
+| `npm run test:maskot` | Audit maskot: ukuran Naru & Kaciro di setiap halaman dan memastikan tidak menutupi teks, tombol, soal, rumus, atau penanda peta (5 lebar layar) |
 | `npm run test:sfx` | Uji efek suara: file pengguna, volume, benar/salah/lencana/klik, tidak bertumpuk, tombol OFF, musik latar tetap |
 | `npm run test:music` | Uji musik latar: autoplay, autoplay diblokir, volume awal, ON/OFF, volume, berpindah halaman |
 | `npm run test:games` | Memainkan keenam mini-game sampai halaman hasil (Playwright) |

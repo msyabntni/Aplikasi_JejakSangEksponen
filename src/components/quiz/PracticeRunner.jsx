@@ -133,7 +133,7 @@ export function PracticeRunner({ questions, onFinish, header, title = "Latihan",
 
             {checked === true && (
               <div className="mt-4 flex items-center gap-3 rounded-2xl bg-[#e3f4dc] p-3">
-                <Naru pose="cheer" width={70} />
+                <Naru pose="cheer" width="min(26vw, 100px)" />
                 <div>
                   <p className="font-display text-lg font-extrabold text-forest">YEAH! Jawabanmu tepat!</p>
                   <p className="text-sm text-jungle">

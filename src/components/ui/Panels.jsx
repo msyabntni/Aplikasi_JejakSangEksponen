@@ -26,8 +26,12 @@ export function Parchment({ children, className = "", as: As = "div" }) {
 }
 
 /** Gelembung dialog karakter. */
+/** Pembesaran maskot di gelembung dialog (ukuran asli × 1,4), maksimal 34% lebar layar di HP. */
+const SKALA_MASKOT = 1.4;
+
 export function Speech({ who, text, pose, mood, side = "left", size = 92, className = "", children }) {
-  const char = who === "naru" ? <Naru pose={pose ?? "idle"} mood={mood} width={size} /> : <Kaciro pose={pose ?? "idle"} mood={mood} width={size} />;
+  const lebar = `min(${Math.round(size * SKALA_MASKOT)}px, 34vw)`;
+  const char = who === "naru" ? <Naru pose={pose ?? "idle"} mood={mood} width={lebar} /> : <Kaciro pose={pose ?? "idle"} mood={mood} width={lebar} />;
   const name = who === "naru" ? "NARU" : "KACIRO";
   const tag = who === "naru" ? "bg-pink text-[#5a1f2b]" : "bg-forest text-white";
   return (

@@ -92,11 +92,11 @@ function Landing() {
         <Butterfly className="left-[46%] top-[62%] hidden sm:block" color="#8ED6E8" style={{ animationDelay: "3.4s" }} />
 
         {/* Naru bergelantungan di bagian atas */}
-        <div className="pointer-events-none absolute left-[2%] top-16 z-20 w-[24vw] max-w-[190px] sm:left-[10%] sm:top-0">
+        <div className="pointer-events-none absolute left-[2%] top-16 z-20 w-[28vw] max-w-[240px] sm:left-[10%] sm:top-0">
           <Naru pose="hang" width="100%" title="Naru bergelantungan pada tanaman rambat" />
         </div>
 
-        <div className="relative z-20 mx-auto flex max-w-6xl flex-col items-center px-4 pb-40 pt-44 text-center sm:pt-24 lg:pb-48">
+        <div className="relative z-20 mx-auto flex max-w-6xl flex-col items-center px-4 pb-52 pt-44 text-center sm:pb-48 sm:pt-24 lg:pb-56">
           <p className="mb-3 rounded-full bg-jungle/80 px-4 py-1 font-display text-sm font-bold tracking-widest text-sun">
             IKUTI JEJAKNYA, TAKLUKKAN KEKUATAN PANGKAT!
           </p>
@@ -119,7 +119,7 @@ function Landing() {
               className="animate-pop mt-4 flex max-w-md items-center gap-2 rounded-2xl bg-white px-4 py-2 text-left text-sm font-semibold text-jungle shadow-lg"
               role="status"
             >
-              <Naru pose="peek" width={46} /> {msg}
+              <Naru pose="peek" width={60} /> {msg}
             </div>
           )}
           <div className="mt-4">
@@ -146,7 +146,7 @@ function Landing() {
           <div className="mb-10 hidden sm:block">
             <WoodSign small>➜ HUTAN EKSPONEN</WoodSign>
           </div>
-          <Kaciro pose="book" width="min(30vw, 170px)" />
+          <Kaciro pose="book" width="min(34vw, 220px)" />
         </div>
 
         {/* foreground */}
@@ -170,7 +170,7 @@ function Landing() {
           <div className="grid gap-8 md:grid-cols-2">
             <div className="relative rounded-[2rem] bg-[#f9dfe3] p-5 pt-2 text-jungle shadow-[0_8px_0_#c97586]">
               <div className="flex items-end gap-3">
-                <Naru pose="jump" width={140} />
+                <Naru pose="jump" width="min(44vw, 180px)" />
                 <div className="pb-4">
                   <h3 className="font-display text-3xl font-extrabold text-[#8b3a4b]">NARU</h3>
                   <p className="font-bold text-[#8b5a3c]">Monyet Penjelajah</p>
@@ -183,7 +183,7 @@ function Landing() {
             </div>
             <div className="relative rounded-[2rem] bg-[#dcefd7] p-5 pt-2 text-jungle shadow-[0_8px_0_#3E7C4F] md:mt-12">
               <div className="flex items-end gap-3">
-                <Kaciro pose="tip" width={130} />
+                <Kaciro pose="tip" width="min(42vw, 170px)" />
                 <div className="pb-4">
                   <h3 className="font-display text-3xl font-extrabold text-forest">KACIRO</h3>
                   <p className="font-bold text-earth">Kancil Cerdas</p>
@@ -267,7 +267,7 @@ function Landing() {
             <div className="rounded-3xl bg-[#ffe3d0] p-4 text-jungle">
               <p className="font-display text-lg font-bold text-[#a3521c]">Rescue Naru</p>
               <div className="mt-1 flex items-end justify-between">
-                <Naru pose="idle" mood="worried" width={70} />
+                <Naru pose="idle" mood="worried" width={92} />
                 <Mountain size={44} className="text-earth" />
               </div>
               <p className="mt-2 text-sm">Bantu Naru melewati lumpur, sungai, dan tebing!</p>
@@ -315,7 +315,7 @@ function Landing() {
             <Footprints className="mx-auto mt-6 w-24" />
           </Parchment>
           <div className="mt-10 flex flex-col items-center gap-4 text-center">
-            <Naru pose="cheer" width={120} />
+            <Naru pose="cheer" width={160} />
             <GameButton size="lg" href="/mulai" icon={<Play size={22} />}>
               MULAI PETUALANGAN
             </GameButton>

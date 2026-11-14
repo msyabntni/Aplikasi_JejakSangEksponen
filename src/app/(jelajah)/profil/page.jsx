@@ -62,7 +62,7 @@ export default function ProfilPage() {
               </p>
             )}
           </div>
-          <div className="hidden w-24 sm:block">
+          <div className="hidden w-32 shrink-0 sm:block md:w-36">
             <Naru pose="hang" width="100%" />
           </div>
         </div>

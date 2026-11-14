@@ -54,7 +54,7 @@ export default function PretestResultPage() {
       <div className="relative grid min-h-[calc(100dvh-64px)] place-items-center overflow-hidden bg-[linear-gradient(180deg,#246B45,#173F2A)]">
         <HangingVines count={9} />
         <motion.div initial={{ x: "-60vw", rotate: -20 }} animate={{ x: "60vw", rotate: 20 }} transition={{ duration: 1.3, ease: "easeInOut" }}>
-          <Naru pose="swing" width={140} />
+          <Naru pose="swing" width={180} />
         </motion.div>
         <p className="absolute bottom-24 font-display text-2xl font-bold text-cream">Menuju Camp Penjelajah...</p>
       </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CheckCircle2, Circle, Clock, Lock, Play, RotateCcw, Star, Swords, ScrollText } from "lucide-react";
+import Naru from "@/components/characters/Naru";
 import { AdventureMap } from "@/components/map/AdventureMap";
 import { RegionScene } from "@/components/region/RegionScene";
 import { GameButton } from "@/components/ui/GameButton";
@@ -34,7 +35,13 @@ export default function PetaPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-3 py-5 sm:px-5">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3 text-cream">
+      <div className={`relative mb-4 flex flex-wrap items-end justify-between gap-3 text-cream ${small ? "min-h-[150px] pr-[32vw]" : ""}`}>
+        {/* di HP penanda peta diperbesar, jadi Naru menemani di samping judul (tidak menutupi peta) */}
+        {small && (
+          <div className="pointer-events-none absolute -top-5 right-0 w-[30vw] max-w-[120px]">
+            <Naru pose="hang" width="100%" title="Naru menunggumu di peta" />
+          </div>
+        )}
         <div>
           <p className="font-display text-sm font-bold tracking-widest text-sun">PETA PETUALANGAN</p>
           <h1 className="font-display text-3xl font-extrabold">Jejak Sang Eksponen</h1>

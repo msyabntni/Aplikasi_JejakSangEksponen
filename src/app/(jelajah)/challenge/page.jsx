@@ -72,7 +72,7 @@ export default function ChallengePage() {
       <div className="mx-auto max-w-3xl px-4 py-6">
         <Parchment className="text-center">
           <div className="flex items-end justify-center gap-2">
-            <Naru pose={result.passed ? "cheer" : "idle"} mood={result.passed ? "cheer" : "worried"} width={110} />
+            <Naru pose={result.passed ? "cheer" : "idle"} mood={result.passed ? "cheer" : "worried"} width="min(40vw, 150px)" />
             {result.passed && <TreasureChest open width={100} />}
           </div>
           <p className="font-display text-sm font-bold tracking-widest text-earth">
@@ -192,7 +192,7 @@ export default function ChallengePage() {
 
         {passed.length === 3 && (
           <div className="mt-6 flex items-center gap-4 rounded-3xl bg-sun p-4 text-earth">
-            <Kaciro pose="cheer" width={90} />
+            <Kaciro pose="cheer" width="min(28vw, 120px)" />
             <div>
               <p className="font-display text-xl font-extrabold">Semua level ditaklukkan!</p>
               <p>Posttest sudah terbuka. Saatnya melihat perkembanganmu.</p>

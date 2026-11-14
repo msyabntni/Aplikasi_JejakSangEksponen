@@ -42,7 +42,7 @@ export default function PretestPage() {
     return (
       <ExamGate>
         <div className="flex min-h-[60vh] flex-col items-center justify-center text-center text-cream">
-          <Naru pose="jump" width={150} />
+          <Naru pose="jump" width={190} />
           <p className="mt-2 font-display text-2xl font-bold">Jawabanmu sedang diperiksa...</p>
         </div>
       </ExamGate>
@@ -100,8 +100,8 @@ export default function PretestPage() {
       ) : (
         <div>
           <div className="mb-4 hidden items-end justify-between sm:flex">
-            <Naru pose="peek" width={80} />
-            <Kaciro pose="book" width={70} />
+            <Naru pose="peek" width={112} />
+            <Kaciro pose="book" width={100} />
           </div>
           <ExamRunner
             title="PRETEST"

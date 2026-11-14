@@ -19,11 +19,11 @@ export function AuthFrame({ title, children }) {
           <ArrowLeft size={16} /> Beranda
         </Link>
         <div className="mb-2 flex items-end justify-between">
-          <Naru pose="hang" width={90} />
+          <Naru pose="hang" width="min(28vw, 124px)" />
           <div className="rounded-2xl bg-jungle px-3 py-2">
             <Logo compact />
           </div>
-          <Kaciro pose="book" width={80} />
+          <Kaciro pose="book" width="min(26vw, 112px)" />
         </div>
         <Parchment>
           <h1 className="mb-4 text-center font-display text-2xl font-extrabold text-jungle">{title}</h1>

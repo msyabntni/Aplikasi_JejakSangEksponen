@@ -54,7 +54,7 @@ export default function LatihanPage() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8">
         <Parchment className="text-center">
-          <div className="mx-auto w-32">
+          <div className="mx-auto w-40">
             <Naru pose={good ? "cheer" : "jump"} width="100%" />
           </div>
           <h1 className="font-display text-3xl font-extrabold text-jungle">Latihan selesai!</h1>
@@ -150,7 +150,7 @@ export default function LatihanPage() {
         <Parchment className="mt-8">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-xl font-extrabold text-jungle">Nilai latihan terakhir</h2>
-            <Kaciro pose="book" width={60} />
+            <Kaciro pose="book" width={88} />
           </div>
           {history.length === 0 ? (
             <p className="text-jungle">Belum ada latihan. Ayo mulai!</p>

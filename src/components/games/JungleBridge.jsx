@@ -83,7 +83,7 @@ export default function JungleBridge({ onEnd }) {
           ))}
         </div>
         <motion.div
-          className="absolute bottom-[96px] w-16 sm:w-20"
+          className="absolute bottom-[96px] w-20 sm:w-24"
           initial={false}
           animate={{ left: crossing ? "84%" : `${2 + (built / PLANKS) * 8}%` }}
           transition={{ duration: crossing ? 2 : 0.4, ease: "easeInOut" }}

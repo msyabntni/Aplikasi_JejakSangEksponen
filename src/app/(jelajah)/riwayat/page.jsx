@@ -52,7 +52,7 @@ export default function RiwayatPage() {
           <h1 className="font-display text-3xl font-extrabold text-cream">Catatan Perjalanan</h1>
           <p className="text-cream/80">Hanya kamu yang bisa melihat riwayat ini.</p>
         </div>
-        <Kaciro pose="book" width={80} />
+        <Kaciro pose="book" width="min(28vw, 112px)" />
       </div>
 
       <div className="no-scrollbar my-4 flex gap-2 overflow-x-auto">

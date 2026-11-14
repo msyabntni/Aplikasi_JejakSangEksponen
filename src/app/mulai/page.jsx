@@ -188,7 +188,7 @@ function Mulai() {
 
         {done && (
           <div className="animate-pop text-center">
-            <div className="mx-auto w-44">
+            <div className="mx-auto w-52">
               <Naru pose="cheer" width="100%" />
             </div>
             <Parchment className="mt-2 text-left">

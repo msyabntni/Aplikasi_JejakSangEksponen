@@ -65,7 +65,7 @@ export function RegionMission({ region, onDone }) {
     const pass = result.score >= MISSION_PASS;
     return (
       <Parchment className="text-center">
-        <div className="mx-auto w-32">
+        <div className="mx-auto w-40">
           <Naru pose={pass ? "cheer" : "idle"} mood={pass ? "cheer" : "worried"} width="100%" />
         </div>
         <h3 className="font-display text-2xl font-extrabold text-jungle">{pass ? "Misi berhasil!" : "Misi belum berhasil"}</h3>

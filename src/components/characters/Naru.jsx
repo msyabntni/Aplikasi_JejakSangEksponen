@@ -135,12 +135,17 @@ function Vine({ x, to }) {
   );
 }
 
+/** Ukuran maskot: angka (px) atau CSS responsif, mis. "min(34vw, 160px)". Tinggi mengikuti proporsi. */
+function ukuran(width, style) {
+  return { width: typeof width === "number" ? `${width}px` : width, height: "auto", flexShrink: 0, ...style };
+}
+
 export default function Naru({ pose = "idle", mood, width = 180, className = "", animate = true, title = "Naru, monyet penjelajah", style }) {
   const m = mood ?? (pose === "cheer" || pose === "jump" ? "cheer" : pose === "hang" || pose === "swing" ? "happy" : "neutral");
 
   if (pose === "peek") {
     return (
-      <svg viewBox="20 0 160 140" width={width} className={className} style={style} role="img" aria-label={title}>
+      <svg viewBox="20 0 160 140" className={className} style={ukuran(width, style)} role="img" aria-label={title}>
         <g className={animate ? "animate-bob" : ""}>
           <Head mood={mood ?? "wink"} />
           <ellipse cx="62" cy="132" rx="14" ry="10" fill={C.face} stroke={C.fur} strokeWidth="5" />
@@ -158,7 +163,7 @@ export default function Naru({ pose = "idle", mood, width = 180, className = "",
   const wrapStyle = hanging ? { transformOrigin: "50% 0%", transformBox: "fill-box" } : {};
 
   return (
-    <svg viewBox={hanging ? "0 -30 200 280" : "0 0 200 260"} width={width} className={className} style={style} role="img" aria-label={title}>
+    <svg viewBox={hanging ? "0 -30 200 280" : "0 0 200 260"} className={className} style={ukuran(width, style)} role="img" aria-label={title}>
       <g className={wrapClass} style={wrapStyle}>
         {pose === "hang" && <Vine x={160} to={24} />}
         {pose === "swing" && <Vine x={100} to={2} />}

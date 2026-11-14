@@ -21,7 +21,7 @@ export default function PosttestPage() {
     return (
       <ExamGate tone="post">
         <div className="flex min-h-[60vh] flex-col items-center justify-center text-center text-cream">
-          <Naru pose="jump" width={150} />
+          <Naru pose="jump" width={190} />
           <p className="mt-2 font-display text-2xl font-bold">Kaciro sedang memeriksa jawabanmu...</p>
         </div>
       </ExamGate>

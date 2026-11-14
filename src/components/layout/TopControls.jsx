@@ -13,8 +13,8 @@ export function InfoModal({ open, onClose }) {
   return (
     <Modal open={open} onClose={onClose} title="Tentang JEJAK SANG EKSPONEN" wide>
       <div className="flex items-end justify-center gap-2">
-        <Naru pose="point" width={90} />
-        <Kaciro pose="book" width={90} />
+        <Naru pose="point" width={124} />
+        <Kaciro pose="book" width={124} />
       </div>
       <div className="space-y-3 text-[15px] leading-relaxed text-[#3a3020]">
         <p>

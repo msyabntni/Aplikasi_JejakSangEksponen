@@ -151,7 +151,7 @@ export function ExamRunner({ questions, draft, onDraft, onSubmit, timerMinutes =
 
       <Modal open={confirm} onClose={() => !busy && setConfirm(false)} title={unanswered ? "Masih ada soal kosong" : "Kumpulkan jawaban?"}>
         <div className="flex items-start gap-3">
-          <Naru pose="peek" width={80} mood={unanswered ? "worried" : "wink"} />
+          <Naru pose="peek" width={104} mood={unanswered ? "worried" : "wink"} />
           <p className="text-[15px] leading-relaxed text-jungle">
             {unanswered ? (
               <>

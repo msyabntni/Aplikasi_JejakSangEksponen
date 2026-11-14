@@ -179,7 +179,7 @@ export default function RegionPage() {
       {/* ───── header wilayah ───── */}
       <header className="relative">
         <RegionScene region={r} className="h-52 sm:h-64" />
-        <div className="pointer-events-none absolute right-2 top-0 w-20 sm:right-10 sm:w-28">
+        <div className="pointer-events-none absolute right-2 top-0 w-24 sm:right-10 sm:w-36">
           <Naru pose="hang" width="100%" />
         </div>
         <div className="absolute inset-x-0 bottom-0 px-4 pb-3">
@@ -244,7 +244,7 @@ export default function RegionPage() {
             <div className="space-y-5">
               <div className="grid gap-5 md:grid-cols-[auto_1fr]">
                 <div className="hidden md:block">
-                  <Kaciro pose="point" width={150} />
+                  <Kaciro pose="point" width={190} />
                 </div>
                 <Parchment>
                   <SectionTitle icon={<BookMarked size={18} />}>Konsep Dasar</SectionTitle>
@@ -384,7 +384,7 @@ export default function RegionPage() {
                 </div>
               </Parchment>
               <div className="flex items-end gap-3 rounded-3xl bg-[#f9dfe3] p-4 text-jungle">
-                {r.fact.by === "naru" ? <Naru pose="sit" width={90} /> : <Kaciro pose="cheer" width={90} />}
+                {r.fact.by === "naru" ? <Naru pose="sit" width="min(30vw, 130px)" /> : <Kaciro pose="cheer" width="min(30vw, 130px)" />}
                 <div>
                   <p className="flex items-center gap-1 font-display text-lg font-extrabold text-[#8b3a4b]">
                     <Sparkles size={18} /> Fakta menarik dari {r.fact.by === "naru" ? "Naru" : "Kaciro"}
@@ -434,7 +434,7 @@ export default function RegionPage() {
                 </ul>
                 {done ? (
                   <div className="mt-3 flex items-center gap-3 rounded-2xl bg-black/20 p-3">
-                    <Naru pose="cheer" width={70} />
+                    <Naru pose="cheer" width="min(26vw, 100px)" />
                     <p className="font-display text-lg font-bold">
                       LUAR BIASA! Wilayah ini sudah selesai{nextR ? ". Jalan menuju wilayah berikutnya sudah terbuka!" : "!"}
                     </p>

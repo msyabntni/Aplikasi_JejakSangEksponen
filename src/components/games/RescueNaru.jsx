@@ -109,7 +109,7 @@ export default function RescueNaru({ onEnd }) {
         </div>
         <div className="relative mt-1 h-20">
           <motion.div
-            className="absolute bottom-0 w-14"
+            className="absolute bottom-0 w-16 sm:w-20"
             animate={{ left: `${(pos / OBSTACLES.length) * 86}%`, y: fb?.ok ? [0, -24, 0] : 0 }}
             transition={{ duration: 0.6 }}
           >

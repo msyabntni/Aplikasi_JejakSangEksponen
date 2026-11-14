@@ -99,7 +99,7 @@ function CampInner() {
         <HangingVines count={6} seed={5} />
         <div className="relative z-20 mx-auto max-w-5xl">
           <div className="grid items-end gap-4 md:grid-cols-[1fr_auto]">
-            <div className="pt-16 md:pt-4">
+            <div className="pt-40 sm:pt-56 md:pt-4">
               <p className="font-display text-sm font-bold tracking-widest text-sun">CAMP PENJELAJAH</p>
               <h1 className="font-display text-3xl font-extrabold text-cream sm:text-4xl">Halo, {j.explorer.name}!</h1>
               <Speech
@@ -116,7 +116,7 @@ function CampInner() {
                 }
               />
             </div>
-            <div className="pointer-events-none absolute right-0 top-0 w-24 sm:w-32 md:static md:w-36">
+            <div className="pointer-events-none absolute right-0 top-0 w-28 sm:w-40 md:static md:w-48">
               <Naru pose="hang" width="100%" />
             </div>
           </div>
@@ -126,7 +126,7 @@ function CampInner() {
             <div className="hidden sm:block">
               <TreasureChest width={90} />
             </div>
-            <Kaciro pose="book" width={110} />
+            <Kaciro pose="book" width="min(34vw, 150px)" />
           </div>
         </div>
         <Monstera className="pointer-events-none absolute -bottom-10 -left-8 w-32" />

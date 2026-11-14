@@ -82,7 +82,7 @@ export default function PosttestResultPage() {
         </GameButton>
       </div>
       <div className="mt-6 flex justify-center">
-        <Naru pose="sit" width={90} />
+        <Naru pose="sit" width={130} />
       </div>
     </ExamGate>
   );

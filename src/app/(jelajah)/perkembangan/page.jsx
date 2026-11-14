@@ -124,7 +124,7 @@ export default function HasilBelajarPage() {
             </>
           ) : (
             <div className="flex items-start gap-3 text-jungle">
-              <Kaciro pose="tip" width={70} />
+              <Kaciro pose="tip" width="min(26vw, 100px)" />
               <p>
                 Grafik perbandingan muncul setelah pretest dan posttest dikerjakan.{" "}
                 {!post &&
@@ -278,7 +278,7 @@ export default function HasilBelajarPage() {
         />
       </div>
       <div className="mt-6 flex items-end justify-center gap-4 print:hidden">
-        <Naru pose="sit" width={90} />
+        <Naru pose="sit" width={130} />
         <GameButton href="/camp">Kembali ke Camp</GameButton>
       </div>
     </div>

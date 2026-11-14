@@ -30,7 +30,7 @@ export default function GameHub() {
               text={`Enam permainan seru menunggumu! Kamu sudah menang di ${j.gamesWon.length} dari ${GAMES.length} game.`}
             />
           </div>
-          <div className="hidden w-32 sm:block">
+          <div className="hidden w-40 shrink-0 sm:block md:w-48">
             <Naru pose="jump" width="100%" />
           </div>
         </div>

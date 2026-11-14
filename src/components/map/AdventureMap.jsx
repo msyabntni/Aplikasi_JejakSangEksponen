@@ -1,5 +1,7 @@
 "use client";
 
+import { useMemo } from "react";
+
 import Naru from "../characters/Naru";
 import { REGIONS } from "@/data/regions";
 
@@ -135,7 +137,7 @@ function Marker({ id, status, onClick, preview, scale = 1 }) {
         </g>
       )}
       {status === "new" && <circle r="58" fill="none" stroke="#B7D98A" strokeWidth="6" className="twinkle" />}
-      <g className="transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110">
+      <g className="transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110" data-penanda="nomor">
         <circle r="44" fill="#173F2A" stroke={ring} strokeWidth="8" />
         <text y="12" textAnchor="middle" fontSize="34" fontWeight="900" fill={status === "locked" ? "#9aa597" : "#fff7e0"} fontFamily="var(--font-display)">
           {r.code}
@@ -158,7 +160,7 @@ function Marker({ id, status, onClick, preview, scale = 1 }) {
           </g>
         )}
       </g>
-      <g transform="translate(0 72)">
+      <g transform="translate(0 72)" data-penanda="nama">
         <rect x="-110" y="-18" width="220" height="36" rx="10" fill="#8a5a3c" stroke="#5a3a28" strokeWidth="3" />
         <text y="7" textAnchor="middle" fontSize="20" fontWeight="800" fill="#fff7e0" fontFamily="var(--font-display)" letterSpacing="1">
           {r.name}
@@ -168,9 +170,39 @@ function Marker({ id, status, onClick, preview, scale = 1 }) {
   );
 }
 
+/** Ukuran Naru di peta (satuan peta). Tinggi = proporsi gambar bergelantungan (200 × 280). */
+const NARU_W = 170;
+const NARU_H = 238;
+const BAWAH_PETA = 1600;
+
+/**
+ * Memilih posisi Naru yang TIDAK menutupi penanda wilayah mana pun (lingkaran nomor + bintang + papan nama),
+ * sedekat mungkin dengan wilayah aktif. Pencarian menyeluruh pada kisi 10 satuan.
+ */
+function posisiNaru(id, markerScale, top) {
+  const p = SPOTS[id];
+  const s = markerScale * 1.05; // + ruang efek membesar saat disentuh
+  // ukuran hasil pengukuran: lingkaran nomor ±44 (bintang hingga -70), papan nama ±110 × (54..90)
+  const kotak = Object.values(SPOTS).map((q) => ({ l: q.x - 112 * s, r: q.x + 112 * s, t: q.y - 72 * s, b: q.y + 92 * s }));
+  const bebas = (x, y) => kotak.every((k) => x + NARU_W <= k.l || x >= k.r || y + NARU_H <= k.t || y >= k.b);
+  const ax = p.x + 140; // titik ideal: kanan-atas penanda
+  const ay = p.y - 220;
+  let terbaik = null;
+  for (let y = top; y <= BAWAH_PETA - NARU_H; y += 10) {
+    for (let x = 0; x <= 1000 - NARU_W; x += 10) {
+      if (!bebas(x, y)) continue;
+      const d = (x + NARU_W / 2 - ax) ** 2 + (y + NARU_H / 2 - ay) ** 2;
+      if (!terbaik || d < terbaik.d) terbaik = { x, y, d };
+    }
+  }
+  return terbaik ? { x: terbaik.x, y: terbaik.y } : { x: Math.min(p.x + 95, 1000 - NARU_W), y: Math.max(p.y - 300, top) };
+}
+
 export function AdventureMap({ statuses, onSelect, naruAt, preview, markerScale = 1 }) {
   const st = (id) => statuses?.[id] ?? (preview ? (id === 1 ? "new" : "locked") : "locked");
   const naru = naruAt ? SPOTS[naruAt] : null;
+  const naruDiPeta = Boolean(naruAt) && markerScale === 1;
+  const posisiNaruMemo = useMemo(() => (naruDiPeta ? posisiNaru(naruAt, markerScale, 70) : null), [naruDiPeta, naruAt, markerScale]);
   return (
     <svg
       viewBox={preview ? "0 80 1000 1460" : markerScale > 1 ? "0 -50 1000 1660" : "0 60 1000 1500"}
@@ -265,17 +297,17 @@ export function AdventureMap({ statuses, onSelect, naruAt, preview, markerScale 
         <path d="M-26 -6 Q-26 -26 0 -26 Q26 -26 26 -6 Z" fill="#a06c48" stroke="#5a3a28" strokeWidth="3" />
         <rect x="-6" y="-4" width="12" height="12" fill="#e0b43c" />
       </g>
-      {naru && (
-        <foreignObject x={naru.x + (naru.x > 500 ? -260 : 90)} y={Math.max(naru.y - 230, 70)} width="150" height="190">
-          <div style={{ width: 150 }}>
-            <Naru pose="hang" width={150} title="Naru menunggumu di sini" />
+      {naru && posisiNaruMemo && (
+        <foreignObject {...posisiNaruMemo} width={NARU_W} height={NARU_H} style={{ pointerEvents: "none" }}>
+          <div style={{ width: 210 }}>
+            <Naru pose="hang" width={210} title="Naru menunggumu di sini" />
           </div>
         </foreignObject>
       )}
       {preview && (
-        <foreignObject x="560" y="1380" width="170" height="170">
-          <div style={{ width: 160 }}>
-            <Naru pose="point" width={150} />
+        <foreignObject x="380" y="1300" width="220" height="250" style={{ pointerEvents: "none" }}>
+          <div style={{ width: 210 }}>
+            <Naru pose="point" width={200} />
           </div>
         </foreignObject>
       )}
