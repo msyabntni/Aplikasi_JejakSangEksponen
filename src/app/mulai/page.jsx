@@ -57,7 +57,7 @@ function Mulai() {
     const v = { name: validateName(name), kelas: validateKelas(kelas) };
     setErrs(v);
     if (v.name || v.kelas) {
-      play("wrong");
+      // kesalahan isian formulir bukan jawaban soal: cukup bunyi klik tombol (tanpa suara "salah")
       return;
     }
     const r = s.loginExplorer(name, kelas);

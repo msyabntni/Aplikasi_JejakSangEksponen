@@ -24,6 +24,7 @@ JEJAK SANG EKSPONEN adalah media pembelajaran matematika berbasis web untuk sisw
 | Posttest | Posttest paralel dengan pretest, lengkap dengan pembahasan |
 | Hasil Belajar (rapor) | Identitas, nilai pretest/posttest dan selisihnya, grafik/tabel per indikator, nilai misi tiap wilayah, latihan, Jungle Challenge, mini-game, lencana, serta tombol cetak/simpan PDF |
 | Musik latar | MP3 milik pengguna diputar dari URL eksternal (`src/components/layout/BackgroundMusic.jsx`). Otomatis diputar saat website dibuka; jika autoplay diblokir browser, muncul tombol **Putar musik latar** (musik juga mulai pada sentuhan pertama). Volume awal 18%. Tombol musik di header berisi ON/OFF dan pengatur volume (tersimpan). Musik tidak terputus saat pindah halaman |
+| Efek suara | File MP3 milik pengguna (`src/lib/sound.js`): **jawaban benar**, **jawaban salah**, **lencana**, dan **klik setiap tombol**. Volume 70% (lebih keras dari musik latar 18%). Hanya satu efek berbunyi pada satu waktu: benar/salah/lencana menghentikan efek sebelumnya, klik tidak memotong suara benar/salah/lencana. Bagian file yang diputar: klik = klik pertama (1,02–1,20 s), lencana = frasa pembuka (0,55–9,74 s). Tombol speaker di header mematikan efek suara tanpa memengaruhi musik |
 | Gamifikasi | XP idempoten, 7 level, permata, 9 lencana, notifikasi hadiah dan naik level |
 | Profil & riwayat | Ubah nama panggilan, kelas, dan avatar; riwayat aktivitas yang bisa difilter |
 | Mode tamu | Berjalan penuh tanpa login. Data tersimpan di localStorage dengan versi dan migrasi |
@@ -151,6 +152,7 @@ docs/                        Panduan Supabase, pengujian, deployment
 | `npm run test:py` | Uji backend Python (unittest), termasuk uji kesetaraan dengan JavaScript |
 | `npm run test:e2e` | Uji alur lengkap di browser (Playwright). Server harus berjalan di port 3123 |
 | `npm run test:journey` | Memainkan seluruh perjalanan lewat UI: pretest, 7 wilayah, 3 level challenge, posttest, XP, dan lencana |
+| `npm run test:sfx` | Uji efek suara: file pengguna, volume, benar/salah/lencana/klik, tidak bertumpuk, tombol OFF, musik latar tetap |
 | `npm run test:music` | Uji musik latar: autoplay, autoplay diblokir, volume awal, ON/OFF, volume, berpindah halaman |
 | `npm run test:games` | Memainkan keenam mini-game sampai halaman hasil (Playwright) |
 | `npm run test:sql` | Uji skema SQL, RLS, dan fungsi RPC di PostgreSQL WASM (tanpa proyek Supabase) |

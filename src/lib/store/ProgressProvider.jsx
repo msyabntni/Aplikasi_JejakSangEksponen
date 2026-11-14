@@ -120,7 +120,8 @@ function useStoreValue() {
       }
       commit(next);
       if (fresh.length) {
-        play("reward");
+        // suara lencana dari file pengguna (sekali saja walau lebih dari satu lencana)
+        if (fresh.some((n) => n.kind === "badge")) play("badge");
         fresh.forEach(notify);
       }
     },

@@ -35,7 +35,7 @@ export default function MysteryChest({ onEnd }) {
     const t = tries + 1;
     setTries(t);
     if (code === c.code) {
-      play("reward");
+      play("correct");
       setOpened((o) => o + 1);
       setState("open");
     } else {

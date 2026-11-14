@@ -4,6 +4,7 @@ import { ProgressProvider } from "@/lib/store/ProgressProvider";
 import { RewardToaster } from "@/components/layout/RewardToaster";
 import { MotionSync } from "@/components/layout/MotionSync";
 import { MusicProvider } from "@/components/layout/BackgroundMusic";
+import { SoundEffects } from "@/components/layout/SoundEffects";
 
 const baloo = Baloo_2({ subsets: ["latin"], variable: "--font-baloo", weight: ["500", "600", "700", "800"] });
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", weight: ["400", "600", "700", "800"] });
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <ProgressProvider>
           <MusicProvider>
             <MotionSync />
+            <SoundEffects />
             {children}
             <RewardToaster />
           </MusicProvider>

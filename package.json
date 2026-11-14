@@ -15,7 +15,8 @@
     "py:data": "node --import ./scripts/alias-loader.mjs scripts/export-python-data.mjs",
     "py:dev": "python backend/dev_server.py",
     "test:py": "python -m unittest discover -s tests -v",
-    "test:music": "node scripts/music-e2e.mjs"
+    "test:music": "node scripts/music-e2e.mjs",
+    "test:sfx": "node scripts/sfx-e2e.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
