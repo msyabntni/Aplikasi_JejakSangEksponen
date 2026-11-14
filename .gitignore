@@ -1,0 +1,31 @@
+# dependency & hasil build
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# rahasia & konfigurasi lokal (JANGAN diunggah)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+!.env.example
+
+# hasil pengujian & log
+e2e-screens
+test-results
+playwright-report
+*.log
+npm-debug.log*
+
+# file yang dibuat otomatis oleh alat
+AGENTS.md
+.vercel
+
+# sistem operasi / editor
+.DS_Store
+Thumbs.db
+desktop.ini

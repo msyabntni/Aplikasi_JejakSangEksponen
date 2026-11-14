@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+@theme {
+  --color-jungle: #173f2a;
+  --color-forest: #246b45;
+  --color-leaf: #62a66b;
+  --color-lime: #b7d98a;
+  --color-sun: #f4d77a;
+  --color-orange: #f39b57;
+  --color-cream: #e9f0d8;
+  --color-earth: #754b35;
+  --color-sky: #8ed6e8;
+  --color-bark: #5a3a28;
+  --color-parchment: #fbf3dc;
+  --color-pink: #e8a0ac;
+  --color-coral: #f08a8a;
+
+  --font-display: var(--font-baloo), "Baloo 2", system-ui, sans-serif;
+  --font-body: var(--font-nunito), "Nunito", system-ui, sans-serif;
+
+  --animate-sway: sway 4s ease-in-out infinite;
+  --animate-swing: swing 3.2s ease-in-out infinite;
+  --animate-bob: bob 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-flutter: flutter 0.35s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2.4s ease-in-out infinite;
+  --animate-wobble: wobble 0.5s ease-in-out;
+  --animate-pop: pop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1);
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-fall: fall 0.9s ease-in forwards;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes swing {
+  0%, 100% { transform: rotate(-9deg); }
+  50% { transform: rotate(9deg); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(14px, -10px); }
+  66% { transform: translate(-10px, 6px); }
+}
+@keyframes flutter {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0.25); }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-6deg); }
+  40% { transform: rotate(5deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+}
+@keyframes pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes fall {
+  to { transform: translateY(120px) rotate(30deg); opacity: 0; }
+}
+@keyframes waterflow {
+  from { background-position: 0 0; }
+  to { background-position: 0 60px; }
+}
+@keyframes riverflow {
+  from { background-position: 0 0; }
+  to { background-position: 80px 0; }
+}
+@keyframes ray {
+  0%, 100% { opacity: 0.25; transform: skewX(-12deg) translateX(0); }
+  50% { opacity: 0.5; transform: skewX(-12deg) translateX(20px); }
+}
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.6); opacity: 0; }
+  50% { transform: scale(1); opacity: 1; }
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { transform: translateY(-80px) translateX(20px); opacity: 0; }
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  background: #173f2a;
+  color: #2a2418;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+/* animasi dimatikan oleh pengguna / sistem */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="on"]) *,
+  html:not([data-motion="on"]) *::before,
+  html:not([data-motion="on"]) *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* papan kayu bertekstur */
+.wood {
+  background-color: #8a5a3c;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0 2px, transparent 2px 38px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 9px),
+    linear-gradient(180deg, #a06c48, #7a4c31);
+  border: 3px solid #5a3a28;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.18), inset 0 -4px 0 rgba(0, 0, 0, 0.18), 0 6px 0 #3e2718, 0 10px 18px rgba(0, 0, 0, 0.25);
+  color: #fff7e0;
+}
+
+/* perkamen */
+.parchment {
+  background-color: #fbf3dc;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(196, 160, 100, 0.18), transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(196, 160, 100, 0.2), transparent 45%),
+    radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.6), transparent 30%);
+  border: 2px solid #d9c08f;
+  box-shadow: 0 4px 0 #c8ab72, 0 12px 24px rgba(40, 30, 10, 0.18);
+}
+
+/* batu */
+.stone {
+  background: linear-gradient(160deg, #e8e4d6, #c9c2ad);
+  border: 2px solid #9d957d;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), 0 4px 0 #8a826b;
+}
+
+.water-fall {
+  background-image: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0 6px, rgba(142, 214, 232, 0.3) 6px 20px, rgba(255, 255, 255, 0.2) 20px 30px);
+  background-size: 100% 60px;
+  animation: waterflow 0.9s linear infinite;
+}
+.river-flow {
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.35) 0 10px, transparent 10px 40px);
+  background-size: 80px 100%;
+  animation: riverflow 2.2s linear infinite;
+}
+.sunray {
+  animation: ray 7s ease-in-out infinite;
+}
+.twinkle {
+  animation: twinkle 2.2s ease-in-out infinite;
+}
+.drift {
+  animation: drift 6s ease-in infinite;
+}
+
+/* tombol bergaya game: hover, pressed, tap */
+.btn-game {
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+/* hover tidak menggeser posisi tombol (mencegah kedip saat kursor di tepi tombol) */
+.btn-game:hover:not(:disabled) {
+  filter: brightness(1.08) saturate(1.05);
+}
+.btn-game:active:not(:disabled) {
+  transform: translateY(4px) scale(0.98);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35) !important;
+}
+.btn-game:disabled {
+  filter: grayscale(0.6);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+.sup-math sup {
+  font-size: 0.62em;
+  vertical-align: 0.6em;
+  line-height: 0;
+  margin-left: 0.03em;
+  font-weight: 800;
+}
+
+:focus-visible {
+  outline: 3px solid #f4d77a;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* cetak rapor hasil belajar */
+@media print {
+  body,
+  .bg-jungle {
+    background: #fff !important;
+  }
+  .parchment {
+    box-shadow: none !important;
+  }
+}
