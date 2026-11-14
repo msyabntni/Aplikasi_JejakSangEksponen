@@ -79,7 +79,7 @@ function MusicControl({ btn }) {
         <Music size={18} className={m.playing ? "animate-bob" : ""} style={{ animationDuration: "1.6s" }} />
       </button>
       {open && (
-        <div className="parchment animate-pop absolute right-0 top-12 z-[70] w-64 rounded-2xl p-3 text-left text-jungle" role="dialog" aria-label="Musik latar">
+        <div className="parchment animate-pop fixed inset-x-3 top-16 z-[70] rounded-2xl p-3 text-left text-jungle sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-64" role="dialog" aria-label="Musik latar">
           <div className="flex items-center justify-between gap-2">
             <span className="font-display text-base font-extrabold">Musik latar</span>
             <button

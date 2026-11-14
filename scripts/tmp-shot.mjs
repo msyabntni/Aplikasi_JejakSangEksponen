@@ -1,0 +1,11 @@
+import { chromium } from "playwright";
+const U = "https://jejak-sang-eksponen.vercel.app";
+let b = await chromium.launch({ channel: "msedge", args: ["--autoplay-policy=no-user-gesture-required"] });
+let p = await b.newPage({ viewport: { width: 390, height: 844 } });
+await p.goto(U); await p.waitForFunction(() => window.__jseMusic && !window.__jseMusic.paused, null, { timeout: 20000 });
+await p.getByRole("button", { name: "Pengaturan musik latar" }).click(); await p.waitForTimeout(500);
+await p.screenshot({ path: "C:/Users/THINKP~1/AppData/Local/Temp/claude/ea982e7e76307297/c99e0584-5d95-4cc9-b9a8-881b87d2b9d8/scratchpad/musik-panel.png" }); await b.close();
+b = await chromium.launch({ channel: "msedge", args: ["--autoplay-policy=user-gesture-required"] });
+p = await b.newPage({ viewport: { width: 390, height: 844 } });
+await p.goto(U); await p.getByRole("button", { name: "Putar musik latar" }).waitFor(); await p.waitForTimeout(600);
+await p.screenshot({ path: "C:/Users/THINKP~1/AppData/Local/Temp/claude/ea982e7e76307297/c99e0584-5d95-4cc9-b9a8-881b87d2b9d8/scratchpad/musik-diblokir.png" }); await b.close();

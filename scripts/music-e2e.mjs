@@ -24,6 +24,13 @@ const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 await page.goto(BASE);
 check("musik otomatis diputar saat website dibuka", await waitPlaying(page));
+await page.getByRole("button", { name: "Pengaturan musik latar" }).click();
+{
+  const bx = await page.getByRole("dialog", { name: "Musik latar" }).boundingBox();
+  check("panel musik utuh di layar HP (beranda)", bx && bx.x >= 0 && bx.x + bx.width <= 390.5, bx ? `x=${Math.round(bx.x)}..${Math.round(bx.x + bx.width)}` : "tidak tampil");
+  if (process.env.SHOTS) await page.screenshot({ path: process.env.SHOTS + "/musik-panel.png" });
+}
+await page.keyboard.press("Escape");
 let a = await audio(page);
 check("URL musik milik pengguna dipakai", a?.src.includes("mp3tourl.com/audio/1794652154846-925cd5a1"), a?.src);
 check("file MP3 benar-benar terbaca (durasi valid)", a && Number.isFinite(a.dur) && a.dur > 10 && !a.err, `durasi ${a?.dur?.toFixed(1)} detik`);
@@ -48,6 +55,11 @@ check("musik tetap berjalan & tidak mengulang dari awal setelah pindah 2 halaman
 // ON/OFF + volume
 await page.getByRole("button", { name: "Pengaturan musik latar" }).click();
 check("panel musik menampilkan volume 18%", (await page.locator("[data-music-volume]").innerText()) === "18%");
+const dalamLayar = async () => {
+  const bx = await page.getByRole("dialog", { name: "Musik latar" }).boundingBox();
+  return bx && bx.x >= 0 && bx.x + bx.width <= 390 + 0.5;
+};
+check("panel musik utuh di layar HP (halaman aplikasi)", await dalamLayar());
 await page.getByRole("switch", { name: "Matikan musik latar" }).click();
 await page.waitForTimeout(300);
 check("tombol OFF menghentikan musik", (await audio(page)).paused);
@@ -68,13 +80,25 @@ await browser.close();
 browser = await launch("user-gesture-required");
 page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 page.on("pageerror", (e) => errors.push(e.message));
+// Pastikan pemblokiran selalu terjadi (seperti Safari iOS): play() ditolak sampai ada sentuhan/tombol.
+await page.addInitScript(() => {
+  let gesture = false;
+  window.addEventListener("pointerdown", () => (gesture = true), true);
+  window.addEventListener("keydown", () => (gesture = true), true);
+  const asli = HTMLMediaElement.prototype.play;
+  HTMLMediaElement.prototype.play = function () {
+    return gesture ? asli.call(this) : Promise.reject(new DOMException("Autoplay diblokir", "NotAllowedError"));
+  };
+});
 await page.goto(BASE);
 await page.waitForTimeout(2500);
 check("autoplay diblokir: musik belum berbunyi", (await audio(page)).paused);
 check("autoplay diblokir: tombol 'Putar musik latar' tampil", await page.getByRole("button", { name: "Putar musik latar" }).isVisible());
+if (process.env.SHOTS) await page.screenshot({ path: process.env.SHOTS + "/musik-diblokir.png" });
 await page.getByRole("button", { name: "Putar musik latar" }).click();
 check("setelah tombol ditekan, musik diputar", await waitPlaying(page, 15000));
 check("ajakan musik hilang setelah diputar", (await page.locator("[data-music-prompt]").count()) === 0);
+if (process.env.SHOTS) await page.screenshot({ path: process.env.SHOTS + "/musik-setelah-putar.png" });
 await browser.close();
 
 check("tidak ada error JavaScript", errors.length === 0, errors.slice(0, 2).join(" | "));
